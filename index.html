@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cardápio BONAPPETTI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#FBEBD2;
+  --card:#F6E1C5;
+  --card-hover:#F8E7D1;
+  --ink:#4A2B22;
+  --mut:#806157;
+  --line:#CBA596;
+  --acc:#6B382A;
+  --cream:#FFF7F0;
+  --shadow:0 5px 18px rgba(77,43,33,.08);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:145px;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:15px/1.45 Inter,system-ui,sans-serif;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.16;
+  background-image:radial-gradient(
+    rgba(107,56,42,.12) .7px,
+    transparent .7px
+  );
+  background-size:9px 9px;
+}
+
+.wrap{
+  width:min(100%,720px);
+  margin:0 auto;
+  padding:0 15px;
+}
+
+/* HEADER */
+
+header{
+  background:var(--bg);
+  border-bottom:1px solid rgba(107,56,42,.18);
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px 0 7px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+}
+
+.logo img{
+  width:min(240px,72vw);
+  height:auto;
+  max-height:86px;
+  object-fit:contain;
+  display:block;
+}
+
+.hero{
+  text-align:center;
+  padding:5px 0 16px;
+}
+
+.hero h1{
+  font:700 clamp(27px,8vw,38px)/1.1 Fraunces,Georgia,serif;
+  margin:0 0 5px;
+  color:var(--ink);
+}
+
+.hero p{
+  margin:0;
+  color:var(--mut);
+  font-size:14px;
+}
+
+/* BARRA */
+
+.bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(251,235,210,.96);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(107,56,42,.16);
+  padding-top:env(safe-area-inset-top,0px);
+  box-shadow:0 3px 12px rgba(77,43,33,.06);
+}
+
+.search{
+  padding:10px 0 6px;
+}
+
+.search input{
+  width:100%;
+  font:500 15px Inter,sans-serif;
+  padding:13px 15px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--cream);
+  color:var(--ink);
+  box-shadow:0 2px 8px rgba(77,43,33,.05);
+}
+
+.search input::placeholder{
+  color:#96796e;
+}
+
+.search input:focus{
+  outline:2px solid var(--acc);
+  outline-offset:1px;
+}
+
+/* CATEGORIAS */
+
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:4px 0 10px;
+  scrollbar-width:none;
+}
+
+.tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.tabs button{
+  flex:none;
+  font:600 13px Inter,sans-serif;
+  color:var(--mut);
+  background:rgba(255,247,240,.52);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 13px;
+  min-height:38px;
+  cursor:pointer;
+}
+
+.tabs button.on{
+  color:var(--cream);
+  background:var(--acc);
+  border-color:var(--acc);
+  box-shadow:0 3px 8px rgba(107,56,42,.16);
+}
+
+/* CONTEÚDO */
+
+main{
+  padding-bottom:10px;
+}
+
+section{
+  padding:24px 0 0;
+}
+
+section h2{
+  font:700 25px/1.1 Fraunces,Georgia,serif;
+  margin:0 0 12px;
+  color:var(--ink);
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+}
+
+section h2:after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:var(--line);
+  margin-left:4px;
+}
+
+section h2 small{
+  font:500 11px Inter,sans-serif;
+  color:var(--mut);
+  white-space:nowrap;
+}
+
+.list{
+  display:block;
+}
+
+/* PRODUTOS */
+
+.item{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 92px;
+  column-gap:13px;
+  row-gap:7px;
+  margin:0 0 12px;
+  padding:11px;
+  background:var(--card);
+  border:1px solid rgba(107,56,42,.12);
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  align-items:start;
+  transition:transform .15s ease,background .15s ease;
+}
+
+.item:active{
+  transform:scale(.992);
+  background:var(--card-hover);
+}
+
+.item>div:first-child{
+  min-width:0;
+  padding-top:2px;
+  grid-column:1;
+  grid-row:1;
+}
+
+.item h3{
+  margin:0 0 5px;
+  font:700 15px/1.25 Inter,sans-serif;
+  color:var(--ink);
+}
+
+.item p{
+  margin:0;
+  color:var(--mut);
+  font-size:13px;
+  line-height:1.35;
+}
+
+/* IMAGEM À DIREITA */
+
+.th{
+  grid-column:2;
+  grid-row:1 / span 2;
+  width:92px;
+  height:92px;
+  border-radius:13px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#E6C8B9,#DAB5A5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font:700 29px Fraunces,Georgia,serif;
+  color:var(--acc);
+  border:1px solid rgba(107,56,42,.12);
+}
+
+.th img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.th.zoom{
+  cursor:zoom-in;
+}
+
+/* PREÇO À ESQUERDA */
+
+.f{
+  grid-column:1;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  padding-top:1px;
+  color:var(--mut);
+  font-size:12px;
+  min-width:0;
+}
+
+.f span:first-child{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.preco{
+  font:700 16px Inter,sans-serif;
+  color:var(--acc);
+  white-space:nowrap;
+  order:-1;
+}
+
+.preco small{
+  font:600 11px Inter;
+  color:var(--mut);
+}
+
+/* ZOOM */
+
+.lb{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:rgba(61,34,27,.9);
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:20px 16px;
+}
+
+.lb.on{
+  display:flex;
+}
+
+.lb img{
+  max-width:100%;
+  max-height:75%;
+  object-fit:contain;
+  border-radius:14px;
+  background:var(--cream);
+  box-shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+.lb span{
+  color:var(--cream);
+  font:600 16px Inter,sans-serif;
+  text-align:center;
+}
+
+.lb button{
+  position:absolute;
+  top:15px;
+  right:12px;
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  background:var(--cream);
+  color:var(--ink);
+  font:400 28px/1 Inter,sans-serif;
+  cursor:pointer;
+}
+
+/* RODAPÉ */
+
+footer{
+  margin:36px 0 20px;
+  color:var(--mut);
+  font-size:12px;
+  text-align:center;
+  padding:22px 8px 8px;
+  border-top:1px solid var(--line);
+}
+
+.footer-title{
+  font:700 17px Fraunces,Georgia,serif;
+  color:var(--ink);
+  margin-bottom:7px;
+}
+
+.footer-review,
+.footer-instagram{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.footer-review{
+  margin:10px auto 7px;
+  padding:10px 15px;
+  border-radius:999px;
+  background:var(--acc);
+  color:var(--cream);
+  box-shadow:0 4px 10px rgba(107,56,42,.14);
+}
+
+.footer-instagram{
+  display:block;
+  color:var(--acc);
+  margin-top:4px;
+}
+
+.footer-copy{
+  margin-top:13px;
+  line-height:1.5;
+}
+
+/* SEM RESULTADO */
+
+.vazio{
+  padding:50px 0;
+  text-align:center;
+  color:var(--mut);
+}
+
+/* DESKTOP */
+
+@media(min-width:680px){
+  .wrap{
+    width:min(100%,980px);
+    padding:0 22px;
+  }
+
+  .logo img{
+    width:260px;
+  }
+
+  .list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .item{
+    margin:0;
+  }
+}
+
+/* CELULAR PEQUENO */
+
+@media(max-width:380px){
+  .wrap{
+    padding-left:11px;
+    padding-right:11px;
+  }
+
+  .item{
+    grid-template-columns:minmax(0,1fr) 82px;
+    column-gap:10px;
+  }
+
+  .th{
+    width:82px;
+    height:82px;
+  }
+
+  .item h3{
+    font-size:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+
+    <div class="top">
+      <div class="logo" id="logo"></div>
+    </div>
+
+    <div class="hero">
+      <h1>Nosso Cardápio</h1>
+      <p>Feito com carinho para você.</p>
+    </div>
+
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+
+    <div class="search">
+      <input
+        id="q"
+        type="search"
+        placeholder="Buscar no cardápio..."
+        aria-label="Buscar no cardápio"
+      >
+    </div>
+
+    <nav class="tabs" id="tabs"></nav>
+
+  </div>
+</div>
+
+<!-- MODAL DE IMAGEM -->
+
+<div
+  class="lb"
+  id="lb"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Foto ampliada"
+>
+
+  <button id="lbx" aria-label="Fechar">
+    &times;
+  </button>
+
+  <img id="lbi" alt="">
+  <span id="lbt"></span>
+
+</div>
+
+<main class="wrap" id="main"></main>
+
+<!-- RODAPÉ -->
+
+<footer class="wrap">
+
+  <div class="footer-title">
+    Padaria e Confeitaria BONAPPETTI
+  </div>
+
+  <a
+    class="footer-review"
+    href="https://www.google.com/search?q=Padaria+e+Confeitaria+BONAPPETTI+Palho%C3%A7a"
+    target="_blank"
+    rel="noopener"
+  >
+    Avalie a BONAPPETTI no Google
+  </a>
+
+  <a
+    class="footer-instagram"
+    href="https://www.instagram.com/bonappetti.palhoca/"
+    target="_blank"
+    rel="noopener"
+  >
+    @bonappetti.palhoca
+  </a>
+
+  <div class="footer-copy">
+    © 2026 — Todos os direitos autorais pertencem a Thaylla Nordt.
+  </div>
+
+</footer>
+
+<script>
+
+/* CONFIGURAÇÃO */
+
+const CONFIG = {
+  nome:"Padaria e Confeitaria BONAPPETTI",
+  logo:"7f8aaede-f93b-47b4-af04-6d6e8f09da04.png",
+};
+
+/* CATEGORIAS */
+
+const CATEGORIAS = {
+  caf:"Cafés",
+  bev:"Bebidas",
+  doc:"Doces",
+  bol:"Bolos e Tortas",
+  pao:"Pães",
+  sal:"Salgados",
+  lan:"Lanches",
+  bis:"Biscoitos",
+  fri:"Frios e Laticínios",
+  out:"Outros"
+};
+
+
+/* FOTOS DOS PRODUTOS */
+
+const FOTOS = {
+  "Café Bom Jesus Extraforte": "fotos/cafe bom jesus extraforte.jpg",
+  "Café torra média em grãos 100% arábica": "fotos/cafe simonetti torra media.jpg",
+  "Café gourmet torra clara e moído 100% arábica 250g": "fotos/cafe simonetti gourmet.jpg",
+  "Café especial torra clara e moído 100% arábica 250g": "fotos/cafe simonetti especial.jpg",
+  "Café superior torra média e moído 100% arábica 250g": "fotos/cafe simonetti superior.jpg",
+  "Café passado": "fotos/cafe passado.jpg",
+  "Leite Integral Tirol 1L": "fotos/leite.jpg"
+};
+
+
+/* PRODUTOS */
+
+const SEM = "--.--";
+
+const produtos = [
+
+/* CAFÉS */
+
+["Café ao leite","caf",SEM,"un"],
+["Café passado","caf",SEM,"un"],
+["Café de máquina","caf",SEM,"un"],
+["Capuccino","caf",SEM,"un"],
+["Capuccino com canela","caf",SEM,"un"],
+["Chocolate quente","caf",SEM,"un"],
+
+["Café Bom Jesus Extraforte 500g","caf",29.90,"un"],
+["Café torra média em grãos 100% arábica","caf",39.90,"un"],
+["Café gourmet torra clara e moído 100% arábica 250g","caf",39.90,"un"],
+["Café especial torra clara e moído 100% arábica 250g","caf",39.90,"un"],
+["Café superior torra média e moído 100% arábica 250g","caf",39.90,"un"],
+
+
+/* BEBIDAS */
+
+["Leite Integral Tirol 1L","bev",5.99,"un"],
+["100% suco de laranja Longa Vita 290ml","bev",7.00,"un"],
+["100% suco de uva Campo Largo 250ml","bev",8.00,"un"],
+["100% suco de laranja Campo Largo 250ml","bev",7.00,"un"],
+["100% suco de uva Prats 300ml","bev",8.90,"un"],
+["Néctar de laranja 50% de suco Longa Vita 900ml","bev",SEM,"un"],
+["100% suco de laranja Prats 900ml","bev",15.00,"un"],
+["100% suco de uva Campo Largo 900ml","bev",18.00,"un"],
+["Néctar de goiaba 40% de suco Longa Vita 900ml","bev",11.99,"un"],
+["Suco sabor laranja Del Valle Kapo 200ml","bev",4.99,"un"],
+["Suco de laranja natural","bev",SEM,"un"],
+["Água de coco integral Campo Largo 900ml","bev",SEM,"un"],
+["DuCoco água de coco 200ml","bev",5.00,"un"],
+["Guaraná Pureza 1L","bev",8.00,"un"],
+["Guaraná Pureza 2L","bev",SEM,"un"],
+["Guaraná Antarctica Zero","bev",5.90,"un"],
+["Coca-Cola 2L","bev",SEM,"un"],
+["Coca-Cola 350ml","bev",7.00,"un"],
+["Coca-Cola Zero Açúcar 500ml","bev",8.50,"un"],
+["Coca-Cola Zero Açúcar 1L","bev",SEM,"un"],
+["Refrigerante de limão siciliano Fys Red Bull 250ml","bev",13.99,"un"],
+["Água mineral natural com gás Armazém 1,5L","bev",SEM,"un"],
+["Água mineral natural sem gás Armazém 1,5L","bev",SEM,"un"],
+["Água mineral natural com gás Santa Rita 1,5L","bev",3.99,"un"],
+["Energético Baly tradicional sem açúcar 473ml","bev",8.99,"un"],
+["Energético Baly tradicional 473ml","bev",8.99,"un"],
+["Energético Baly amora com hortelã 473ml","bev",8.99,"un"],
+["Energético Baly tradicional 2L","bev",SEM,"un"],
+["Energético Monster tradicional sem açúcar 473ml","bev",12.99,"un"],
+["Achocolatado Tirol Kids 200ml","bev",SEM,"un"],
+["Baly Kids uva 220ml","bev",7.00,"un"],
+["Baly Kids tutti frutti 220ml","bev",7.00,"un"],
+["Choco Leite 220ml","bev",SEM,"un"],
+["Choco Leite 200ml de vidro","bev",8.00,"un"],
+["Choco Leite 260ml","bev",7.00,"un"],
+["Nescau 180ml","bev",SEM,"un"],
+["Leite fermentado tradicional, morango ou uva 80g","bev",2.00,"un"],
+["Pro Force chocolate 15g de proteína Piracanjuba 250ml","bev",12.00,"un"],
+["Cerveja Budweiser Zero 330ml","bev",SEM,"un"],
+["Cerveja Sol 330ml","bev",7.00,"un"],
+["Cerveja Brahma 350ml","bev",4.50,"un"],
+["Cerveja Schin 350ml","bev",3.90,"un"],
+["Cerveja Heineken original 330ml","bev",9.99,"un"],
+["Cerveja Heineken sem glúten 330ml","bev",12.00,"un"],
+["Cerveja Amstel Large puro malte 250ml","bev",6.00,"un"],
+
+
+/* DOCES */
+
+["Caixa de bombom Nestlé 220g","doc",18.90,"un"],
+["Bombom de nozes","doc",6.00,"un"],
+["Brigadeiro casadinho","doc",6.00,"un"],
+["Brigadeiro bicho de pé","doc",5.00,"un"],
+["Brigadeiro de chocolate","doc",5.00,"un"],
+["Brigadeiro de coco","doc",5.00,"un"],
+["Doce pé de moça","doc",3.90,"un"],
+["Mini sonho","doc",1.00,"un"],
+["Sonho","doc",5.00,"un"],
+["Quindim","doc",7.00,"un"],
+["Brownie com cobertura","doc",10.00,"un"],
+["Brownie americano","doc",SEM,"un"],
+["Cookie de red velvet","doc",SEM,"un"],
+["Cookie de chocolate","doc",SEM,"un"],
+["Cookie tradicional","doc",SEM,"un"],
+["Alfajor de doce de leite 55g","doc",7.50,"un"],
+["Folhado","doc",10.00,"un"],
+["Folhado com doce","doc",2.00,"un"],
+["Folhado de cereja","doc",SEM,"un"],
+["Mousse de chocolate","doc",6.90,"un"],
+["Pudim mini","doc",10.00,"un"],
+["Pão de mel","doc",46.90,"kg"],
+["Goiabinha","doc",49.90,"kg"],
+["Suspiro","doc",49.90,"kg"],
+["Chocolate Negresco","doc",2.00,"un"],
+["Chocolate Smash","doc",2.00,"un"],
+["Chocolate Prestígio","doc",2.00,"un"],
+["Chocolate Kit Kat","doc",2.00,"un"],
+["Chocolate Ouro Branco","doc",2.00,"un"],
+["Chiclete Trident","doc",3.50,"un","Consultar sabores"],
+["Pirulito Chupa-Chups laranja","doc",2.00,"un"],
+["Pirulito Chupa-Chups morango","doc",1.50,"un"],
+["Pirulito Fruslytto morango","doc",SEM,"un"],
+["Bala Valda 12g","doc",SEM,"un"],
+["Mentos","doc",SEM,"un"],
+["Barrinha de cereal","doc",SEM,"un"],
+["Carolina","doc",SEM,"un"],
+
+
+/* BOLOS E TORTAS */
+
+["Bolo de prestígio (fatia)","bol",15.00,"fatia"],
+["Bolo de frutas vermelhas (fatia)","bol",15.00,"fatia"],
+["Torta de morango com nata","bol",10.00,"fatia"],
+["Torta de coco","bol",15.00,"fatia"],
+["Torta de maracujá","bol",10.00,"fatia"],
+["Torta de banana","bol",SEM,"fatia"],
+["Torta de limão","bol",SEM,"fatia"],
+["Torta alemã (fatia)","bol",SEM,"fatia"],
+["Torta fria","bol",SEM,"un"],
+["Pudim (fatia)","bol",10.00,"fatia"],
+["Quindim em fatia","bol",SEM,"fatia"],
+["Rocambole de cereja","bol",10.00,"fatia"],
+["Rocambole de negresco","bol",10.00,"fatia"],
+["Mini tortinha de uva","bol",10.00,"un"],
+["Mini tortinha de coco queimado","bol",8.00,"un"],
+["Mini tortinha de chocolate","bol",10.00,"un"],
+["Mini tortinha de limão","bol",10.00,"un"],
+["Mini tortinha de maracujá","bol",10.00,"un"],
+["Bolo misto","bol",4.99,"un"],
+["Bolo de banana","bol",SEM,"un"],
+["Bolo brigadeiro","bol",SEM,"un"],
+["Bolo floresta negra","bol",SEM,"un"],
+["Bolo de paçoca","bol",49.90,"kg"],
+["Bolo de banana","bol",29.90,"kg"],
+["Bolo mesclado","bol",29.90,"kg"],
+["Bolo de laranja","bol",29.90,"kg"],
+["Bolo de maçã","bol",29.90,"kg"],
+["Bolo de coco","bol",29.90,"kg"],
+["Bolo floresta negra","bol",29.90,"kg"],
+["Bolo formigueiro","bol",29.90,"kg"],
+["Bolo amanteigado","bol",29.90,"kg"],
+["Bolo de nozes","bol",24.90,"kg"],
+["Bolo de cenoura com calda de chocolate","bol",SEM,"kg"],
+["Cuca nozes e doce de leite","bol",27.90,"kg"],
+["Cuca","bol",SEM,"un"],
+
+
+/* PÃES */
+
+["Pão caseiro","pao",19.90,"kg"],
+["Pão de nata","pao",22.90,"kg"],
+["Pão de milho","pao",21.90,"kg"],
+["Pão torrado","pao",44.90,"kg"],
+["Rosca de vento","pao",59.90,"kg"],
+["Pão redondo","pao",SEM,"un"],
+["Pão francês","pao",SEM,"un"],
+["Pão de cachorro quente","pao",SEM,"un"],
+["Pão integral","pao",SEM,"un"],
+["Doguinho","pao",39.90,"kg"],
+["Panetone","pao",34.90,"un"],
+["Panetone de chocolate","pao",34.90,"un"],
+["Panettone Pinheiro","pao",39.90,"kg"],
+["Panetone de pistache","pao",SEM,"un"],
+["Panetone de prestígio","pao",SEM,"un"],
+["Panetone de chocolate (kg)","pao",SEM,"kg"],
+
+
+/* SALGADOS */
+
+["Pão de queijo de provolone","sal",56.90,"kg"],
+["Pão de queijo mini","sal",56.90,"kg"],
+["Pão de queijo","sal",SEM,"un"],
+["Pamonha salgada ou doce","sal",10.90,"un"],
+["Torta (salgada)","sal",SEM,"un"],
+["Empadão de frango","sal",SEM,"un"],
+["Dogão","sal",SEM,"un"],
+["Espetinho de frango","sal",SEM,"un"],
+["Pastel","sal",SEM,"un","Consultar sabores"],
+["Almôndega","sal",SEM,"un"],
+["Risole","sal",SEM,"un"],
+["Coxinha","sal",SEM,"un","Consultar sabores"],
+["Mini coxinha","sal",SEM,"un"],
+["Bolinha de queijo","sal",SEM,"un"],
+["Almofadinha","sal",SEM,"un"],
+
+
+/* LANCHES */
+
+["Sanduíche natural","lan",12.00,"un"],
+["Wrap natural","lan",15.00,"un"],
+["Sanduíche natural (kg)","lan",59.90,"kg"],
+
+
+/* BISCOITOS */
+
+["Orelha de gato","bis",34.90,"kg"],
+["Rosquinha","bis",59.90,"kg"],
+["Bolacha pintada","bis",59.90,"kg"],
+["Chineque","bis",30.99,"kg"],
+["Bolacha de coco (34,90)","bis",34.90,"kg"],
+["Bolacha de coco (24,90)","bis",24.90,"kg"],
+["Bolacha de fubá","bis",29.90,"kg"],
+["Bolacha caseira","bis",39.90,"kg"],
+["Biscoito amanteigado com goiabada","bis",39.90,"kg"],
+["Pet four de nozes","bis",69.90,"kg"],
+
+
+/* FRIOS */
+
+["Requeijão cremoso Porto Novo 400g","fri",16.99,"un"],
+["Requeijão cremoso Porto Novo 180g","fri",7.99,"un"],
+["Requeijão cremoso light Porto Novo 180g","fri",7.99,"un"],
+["Requeijão cremoso zero lactose Porto Novo 180g","fri",9.99,"un"],
+["Requeijão cremoso Tirol 180g","fri",9.79,"un"],
+["Requeijão cremoso light Tirol 180g","fri",9.79,"un"],
+["Manteiga de primeira qualidade sem sal Porto Novo 200g","fri",12.99,"un"],
+["Manteiga de primeira qualidade com sal Porto Novo 200g","fri",12.99,"un"],
+["Margarina com creme de leite Delícia","fri",9.89,"un"],
+["Nata Tirol 300g","fri",12.99,"un"],
+["Nata Porto Novo 280g","fri",SEM,"un"],
+["Queijo tipo quark Porto Novo 250g","fri",11.50,"un"],
+["Queijo tipo quark light Porto Novo 250g","fri",11.50,"un"],
+["Creme de ricota Porto Novo 150g","fri",7.99,"un"],
+["Queijo mussarela fatiado Tirol 150g","fri",12.99,"un"],
+["Queijo prato (lanche) fatiado Tirol 150g","fri",12.99,"un"],
+["Apresuntado fatiado 150g","fri",5.99,"un"],
+["Presunto cozido fatiado 120g","fri",6.99,"un"],
+["Mortadela Perdigão","fri",7.50,"un"],
+["Mortadela de ave (frango) fatiado Friolat 150g","fri",4.99,"un"],
+["Mortadela com toucinho Produtos da Fazenda 150g","fri",4.49,"un"],
+["Mortadela tradicional defumada Perdigão Ouro 200g","fri",9.99,"un"],
+["Salsicha Friolat 300g","fri",6.49,"un"],
+["Patê de frango com ervas finas Excelsior 100g","fri",4.75,"un"],
+["Patê de carne suína sabor presunto Excelsior 100g","fri",4.75,"un"],
+
+
+/* OUTROS */
+
+["Pringles original","out",12.99,"un"],
+["Farinha de rosca","out",15.97,"kg"]
+
+];
+
+
+/* FUNÇÕES */
+
+const $ = id => document.getElementById(id);
+
+const esc = s =>
+  String(s).replace(
+    /[&<>"]/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;"
+    }[c])
+  );
+
+const norm = s =>
+  String(s)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase();
+
+let cat = "todos";
+let termo = "";
+
+
+/* PREÇO */
+
+function precoHTML(p,u){
+
+  const v =
+    typeof p === "number"
+      ? p.toLocaleString(
+          "pt-BR",
+          {
+            minimumFractionDigits:2
+          }
+        )
+      : p;
+
+  const suf =
+    u === "kg"
+      ? "/kg"
+      : u === "fatia"
+        ? "/fatia"
+        : "";
+
+  return `R$ ${v}${
+    suf
+      ? `<small>${suf}</small>`
+      : ""
+  }`;
+}
+
+
+/* DESCRIÇÕES */
+
+function descricao(nome){
+
+  const n = norm(nome);
+
+  if(n.includes("cafe ao leite"))
+    return "Café preparado com leite.";
+
+  if(n === "espresso")
+    return "Café espresso preparado na máquina.";
+
+  if(n.includes("cafe de maquina"))
+    return "Café preparado na máquina.";
+
+  if(n === "capuccino")
+    return "Café cremoso com leite e chocolate.";
+
+  if(n.includes("capuccino com canela"))
+    return "Capuccino cremoso finalizado com canela.";
+
+  if(n === "chocolate quente")
+    return "Bebida quente e cremosa de chocolate.";
+
+  if(n.includes("cafe bom jesus"))
+    return "Café torrado e moído.";
+
+  if(n.includes("cafe"))
+    return "Café selecionado.";
+
+  if(n.includes("leite"))
+    return "Leite integral.";
+
+  if(n.includes("suco"))
+    return "Bebida de fruta pronta para beber.";
+
+  if(n.includes("energetico"))
+    return "Energético.";
+
+  if(n.includes("cerveja"))
+    return "Cerveja.";
+
+  if(n.includes("brigadeiro"))
+    return "Doce artesanal.";
+
+  if(n.includes("brownie"))
+    return "Brownie de chocolate.";
+
+  if(n.includes("cookie"))
+    return "Cookie artesanal.";
+
+  if(n.includes("bolo"))
+    return "Bolo artesanal.";
+
+  if(n.includes("torta"))
+    return "Torta artesanal.";
+
+  if(n.includes("pao"))
+    return "Pão artesanal.";
+
+  if(n.includes("coxinha"))
+    return "Salgado artesanal.";
+
+  if(n.includes("pastel"))
+    return "Pastel recheado.";
+
+  if(n.includes("sanduiche"))
+    return "Sanduíche preparado com carinho.";
+
+  if(n.includes("requeijao"))
+    return "Requeijão cremoso.";
+
+  if(n.includes("queijo"))
+    return "Queijo.";
+
+  return "";
+}
+
+
+/* TAMANHO */
+
+function tamanho(nome){
+
+  const m = [
+    ...nome.matchAll(
+      /(\d+(?:[.,]\d+)?)\s?(ml|l|g|kg)\b/gi
+    )
+  ].pop();
+
+  return m
+    ? m[1] + m[2].toLowerCase()
+    : "";
+}
+
+
+/* CARD */
+
+function card(p){
+
+  const [
+    nome,
+    ,
+    preco,
+    un,
+    obs
+  ] = p;
+
+  const extras = [
+    obs,
+    tamanho(nome),
+    un === "kg"
+      ? "Por kg"
+      : un === "fatia"
+        ? "Fatia"
+        : ""
+  ]
+  .filter(Boolean)
+  .join(" • ");
+
+  const f = FOTOS[nome];
+
+  const foto = f
+    ? `
+      <img
+        src="${esc(f)}"
+        alt="${esc(nome)}"
+        loading="lazy"
+      >
+    `
+    : esc(
+        nome.trim()[0].toUpperCase()
+      );
+
+  const d = descricao(nome);
+
+  return `
+    <article class="item">
+
+      <div>
+
+        <h3>
+          ${esc(nome)}
+        </h3>
+
+        ${
+          d
+            ? `<p>${esc(d)}</p>`
+            : ""
+        }
+
+      </div>
+
+      <div
+        class="th${f ? " zoom" : ""}"
+        ${
+          f
+            ? `
+              role="button"
+              tabindex="0"
+              data-img="${esc(f)}"
+              data-nome="${esc(nome)}"
+            `
+            : ""
+        }
+      >
+        ${foto}
+      </div>
+
+      <div class="f">
+
+        <span>
+          ${esc(extras)}
+        </span>
+
+        <span class="preco">
+          ${precoHTML(preco,un)}
+        </span>
+
+      </div>
+
+    </article>
+  `;
+}
+
+
+/* RENDER */
+
+function render(){
+
+  const t = norm(termo.trim());
+
+  let html = "";
+
+  for(
+    const [k,titulo]
+    of Object.entries(CATEGORIAS)
+  ){
+
+    if(
+      cat !== "todos" &&
+      cat !== k
+    ){
+      continue;
+    }
+
+    const l =
+      produtos.filter(
+        p =>
+          p[1] === k &&
+          (
+            !t ||
+            norm(p[0]).includes(t)
+          )
+      );
+
+    if(!l.length)
+      continue;
+
+    html += `
+      <section id="c-${k}">
+
+        <h2>
+          ${titulo}
+
+          <small>
+            ${l.length}
+            ${l.length > 1 ? "itens" : "item"}
+          </small>
+        </h2>
+
+        <div class="list">
+          ${l.map(card).join("")}
+        </div>
+
+      </section>
+    `;
+  }
+
+  $("main").innerHTML =
+    html ||
+    `
+      <div class="vazio">
+        Nenhum item encontrado para
+        “${esc(termo)}”.
+      </div>
+    `;
+}
+
+
+/* TABS */
+
+function tabs(){
+
+  const all = {
+    todos:"Todos",
+    ...CATEGORIAS
+  };
+
+  $("tabs").innerHTML =
+    Object.entries(all)
+      .map(
+        ([k,v]) =>
+          `
+            <button
+              data-k="${k}"
+              class="${k === cat ? "on" : ""}"
+            >
+              ${v}
+            </button>
+          `
+      )
+      .join("");
+}
+
+
+/* CLIQUE NAS CATEGORIAS */
+
+$("tabs").addEventListener(
+  "click",
+  e => {
+
+    const b =
+      e.target.closest("button");
+
+    if(!b)
+      return;
+
+    cat = b.dataset.k;
+
+    tabs();
+    render();
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+    b.scrollIntoView({
+      inline:"center",
+      block:"nearest",
+      behavior:"smooth"
+    });
+  }
+);
+
+
+/* ZOOM */
+
+const lb = $("lb");
+
+function abrir(t){
+
+  $("lbi").src =
+    t.dataset.img;
+
+  $("lbi").alt =
+    t.dataset.nome;
+
+  $("lbt").textContent =
+    t.dataset.nome;
+
+  lb.classList.add("on");
+
+  document.body.style.overflow =
+    "hidden";
+}
+
+function fechar(){
+
+  lb.classList.remove("on");
+
+  $("lbi").src = "";
+
+  document.body.style.overflow =
+    "";
+}
+
+$("main").addEventListener(
+  "click",
+  e => {
+
+    const t =
+      e.target.closest(".zoom");
+
+    if(t)
+      abrir(t);
+  }
+);
+
+$("main").addEventListener(
+  "keydown",
+  e => {
+
+    const t =
+      e.target.closest(".zoom");
+
+    if(
+      t &&
+      (
+        e.key === "Enter" ||
+        e.key === " "
+      )
+    ){
+
+      e.preventDefault();
+      abrir(t);
+    }
+  }
+);
+
+lb.addEventListener(
+  "click",
+  e => {
+
+    if(e.target !== $("lbi"))
+      fechar();
+
+  }
+);
+
+$("lbx").addEventListener(
+  "click",
+  fechar
+);
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(e.key === "Escape")
+      fechar();
+
+  }
+);
+
+
+/* BUSCA */
+
+$("q").addEventListener(
+  "input",
+  e => {
+
+    termo =
+      e.target.value;
+
+    render();
+
+  }
+);
+
+
+/* LOGO */
+
+$("logo").innerHTML =
+  CONFIG.logo
+    ? `
+      <img
+        src="${esc(CONFIG.logo)}"
+        alt="${esc(CONFIG.nome)}"
+      >
+    `
+    : `
+      <strong style="
+        font:700 22px Fraunces,Georgia,serif;
+        color:var(--acc);
+        text-align:center;
+      ">
+        BONAPPETTI
+      </strong>
+    `;
+
+
+/* INICIALIZAÇÃO */
+
+tabs();
+render();
+
+</script>
+
+</body>
+</html>
