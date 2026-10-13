@@ -676,7 +676,8 @@ const CATEGORIAS = {
 
 /* =========================================================
    FOTOS DOS PRODUTOS
-   Todos os arquivos devem estar em .jpg
+   Caminho relativo: fotos/nome-do-arquivo.jpg
+   (o nome precisa ser IGUAL ao do arquivo na pasta "fotos")
 ========================================================= */
 
 const FOTOS = {
@@ -1470,6 +1471,225 @@ let termo = "";
 
 
 /* =========================================================
+   FOTOS: CAMINHO, CODIFICAÇÃO E VARIAÇÕES
+   -------------------------------------------------------
+   O caminho de FOTOS é o caminho "oficial" (1ª tentativa).
+   Se o servidor não achar o arquivo, tentamos variações
+   que costumam diferenciar o arquivo real do nome digitado:
+     - extensão .jpg / .JPG / .jpeg (hospedagem diferencia
+       maiúscula de minúscula; o seu PC não)
+     - acento composto (NFC) / decomposto (NFD, comum em
+       arquivos criados no Mac) / sem acento
+   Só depois de esgotar tudo aparece "Imagem não encontrada".
+========================================================= */
+
+const FOTOS_PASTA = "fotos/";
+
+/* caminho original -> URL que funcionou, ou false se nenhuma funcionou */
+const fotoCache = new Map();
+const fotoAvisadas = new Set();
+
+
+function variantesFoto(caminho){
+
+  const nomeArquivo = String(caminho)
+    .replace(/^\.?\/?fotos\//i,"")
+    .replace(/\.(jpe?g|png)$/i,"");
+
+  const bases = [
+    nomeArquivo.normalize("NFC"),
+    nomeArquivo.normalize("NFD"),
+    nomeArquivo
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .normalize("NFC")
+  ];
+
+  const exts = [".jpg",".JPG",".jpeg"];
+
+  const urls = [];
+
+  bases.forEach(base => {
+    exts.forEach(ext => {
+
+      /* encodeURIComponent: espaços, acentos, vírgulas, #, %, ? etc. */
+      const url = FOTOS_PASTA + encodeURIComponent(base + ext);
+
+      if(!urls.includes(url))
+        urls.push(url);
+
+    });
+  });
+
+  return urls;
+
+}
+
+
+function semFoto(th){
+
+  if(!th)
+    return;
+
+  th.classList.remove("zoom");
+  th.classList.add("erro-img");
+
+  ["role","tabindex","aria-label"].forEach(a => th.removeAttribute(a));
+
+  th.textContent = "Imagem não encontrada";
+
+}
+
+
+/* Falha de carregamento: tenta a próxima variação; só desiste no fim. */
+
+$("main").addEventListener(
+  "error",
+  e => {
+
+    const img = e.target;
+
+    if(
+      !(img instanceof HTMLImageElement) ||
+      !img.dataset.f
+    )
+      return;
+
+    const f = img.dataset.f;
+    const cand = variantesFoto(f);
+    const prox = (parseInt(img.dataset.i,10) || 0) + 1;
+
+    if(prox < cand.length){
+
+      img.dataset.i = prox;
+      img.src = cand[prox];
+
+      return;
+
+    }
+
+    /* nenhuma variação existe: arquivo realmente ausente */
+
+    fotoCache.set(f,false);
+
+    if(!fotoAvisadas.has(f)){
+
+      fotoAvisadas.add(f);
+
+      console.warn(
+        `[Cardápio] Foto não encontrada para "${img.alt}". ` +
+        `Caminho em FOTOS: "${f}". Tentativas:`,
+        cand.map(u => new URL(u,location.href).href)
+      );
+
+    }
+
+    semFoto(img.closest(".th"));
+
+  },
+  true
+);
+
+
+/* Sucesso: guarda a URL que funcionou (evita refazer tentativas). */
+
+$("main").addEventListener(
+  "load",
+  e => {
+
+    const img = e.target;
+
+    if(
+      img instanceof HTMLImageElement &&
+      img.dataset.f
+    ){
+      fotoCache.set(
+        img.dataset.f,
+        img.getAttribute("src")
+      );
+    }
+
+  },
+  true
+);
+
+
+/* Diagnóstico (opcional): no console do navegador, digite
+   verificarFotos()
+   Lista quais caminhos de FOTOS só funcionam com variação
+   (ajuste o nome em FOTOS) e quais arquivos não existem. */
+
+function testarImagem(url){
+
+  return new Promise(resolve => {
+
+    const i = new Image();
+
+    i.onload  = () => resolve(true);
+    i.onerror = () => resolve(false);
+
+    i.src = url;
+
+  });
+
+}
+
+
+async function verificarFotos(){
+
+  const comVariacao = [];
+  const ausentes = [];
+
+  await Promise.all(
+
+    Object.entries(FOTOS).map(async ([produto,caminho]) => {
+
+      const cand = variantesFoto(caminho);
+
+      for(let i = 0; i < cand.length; i++){
+
+        if(await testarImagem(cand[i])){
+
+          if(i > 0){
+            comVariacao.push({
+              produto,
+              emFOTOS: caminho,
+              arquivoReal: decodeURIComponent(cand[i])
+            });
+          }
+
+          return;
+
+        }
+
+      }
+
+      ausentes.push({ produto, emFOTOS: caminho });
+
+    })
+
+  );
+
+  console.log(
+    `Fotos verificadas: ${Object.keys(FOTOS).length} | ` +
+    `só com variação: ${comVariacao.length} | ` +
+    `inexistentes: ${ausentes.length}`
+  );
+
+  if(comVariacao.length){
+    console.log("Caminho diferente do arquivo real (corrigir em FOTOS):");
+    console.table(comVariacao);
+  }
+
+  if(ausentes.length){
+    console.log("Arquivo não existe na pasta fotos:");
+    console.table(ausentes);
+  }
+
+}
+
+
+/* =========================================================
    PREÇO
 ========================================================= */
 
@@ -1695,25 +1915,55 @@ function card(p){
 
   const f = FOTOS[nome];
 
+  let classesTh = "th";
+  let attrsTh = "";
+  let conteudo;
 
-  const foto = f
 
-    ? `
+  if(!f){
+
+    /* produto sem foto cadastrada: mostra a inicial */
+
+    conteudo = esc(
+      nome.trim()[0].toUpperCase()
+    );
+
+  }
+  else if(fotoCache.get(f) === false){
+
+    /* já testamos todas as variações: arquivo realmente não existe */
+
+    classesTh += " erro-img";
+    conteudo = "Imagem não encontrada";
+
+  }
+  else{
+
+    const cand = variantesFoto(f);
+    const ok = fotoCache.get(f);
+    const i = ok ? Math.max(cand.indexOf(ok),0) : 0;
+
+    classesTh += " zoom";
+
+    attrsTh = `
+      role="button"
+      tabindex="0"
+      data-nome="${esc(nome)}"
+      aria-label="Ampliar foto de ${esc(nome)}"
+    `;
+
+    conteudo = `
       <img
-        src="${esc(f)}"
+        src="${esc(cand[i])}"
+        data-f="${esc(f)}"
+        data-i="${i}"
         alt="${esc(nome)}"
         loading="lazy"
-        onerror="
-          this.style.display='none';
-          this.parentElement.classList.add('erro-img');
-          this.parentElement.textContent='Imagem não encontrada';
-        "
+        decoding="async"
       >
-    `
+    `;
 
-    : esc(
-        nome.trim()[0].toUpperCase()
-      );
+  }
 
 
   const d = descricao(nome);
@@ -1738,24 +1988,9 @@ function card(p){
       </div>
 
 
-      <div
-        class="th${f ? " zoom" : ""}"
+      <div class="${classesTh}" ${attrsTh}>
 
-        ${
-          f
-            ? `
-              role="button"
-              tabindex="0"
-              data-img="${esc(f)}"
-              data-nome="${esc(nome)}"
-              aria-label="Ampliar foto de ${esc(nome)}"
-            `
-            : ""
-        }
-
-      >
-
-        ${foto}
+        ${conteudo}
 
       </div>
 
@@ -2008,14 +2243,21 @@ const lb = $("lb");
 
 function abrir(t){
 
+  /* usa a URL que realmente carregou no card */
+
+  const im = t.querySelector("img");
+
+  if(!im)
+    return;
+
   $("lbi").src =
-    t.dataset.img;
+    im.currentSrc || im.src;
 
   $("lbi").alt =
-    t.dataset.nome;
+    t.dataset.nome || "";
 
   $("lbt").textContent =
-    t.dataset.nome;
+    t.dataset.nome || "";
 
   lb.classList.add("on");
 
@@ -2039,7 +2281,7 @@ function fechar(){
     "true"
   );
 
-  $("lbi").src = "";
+  $("lbi").removeAttribute("src");
   $("lbi").alt = "";
   $("lbt").textContent = "";
 
