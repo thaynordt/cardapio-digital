@@ -3,11 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#FBEBD2">
+
 <title>Cardápio BONAPPETTI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
   --bg:#FBEBD2;
   --card:#F6E1C5;
@@ -47,6 +50,12 @@ body:before{
     transparent .7px
   );
   background-size:9px 9px;
+  z-index:-1;
+}
+
+button,
+input{
+  font-family:inherit;
 }
 
 .wrap{
@@ -55,7 +64,9 @@ body:before{
   padding:0 15px;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header{
   background:var(--bg);
@@ -101,7 +112,9 @@ header{
   font-size:14px;
 }
 
-/* BARRA */
+/* =========================
+   BARRA
+========================= */
 
 .bar{
   position:sticky;
@@ -109,6 +122,7 @@ header{
   z-index:10;
   background:rgba(251,235,210,.96);
   backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(107,56,42,.16);
   padding-top:env(safe-area-inset-top,0px);
   box-shadow:0 3px 12px rgba(77,43,33,.06);
@@ -138,7 +152,9 @@ header{
   outline-offset:1px;
 }
 
-/* CATEGORIAS */
+/* =========================
+   CATEGORIAS
+========================= */
 
 .tabs{
   display:flex;
@@ -162,6 +178,11 @@ header{
   padding:8px 13px;
   min-height:38px;
   cursor:pointer;
+  transition:.15s ease;
+}
+
+.tabs button:hover{
+  background:var(--card-hover);
 }
 
 .tabs button.on{
@@ -171,7 +192,9 @@ header{
   box-shadow:0 3px 8px rgba(107,56,42,.16);
 }
 
-/* CONTEÚDO */
+/* =========================
+   CONTEÚDO
+========================= */
 
 main{
   padding-bottom:10px;
@@ -208,7 +231,9 @@ section h2 small{
   display:block;
 }
 
-/* PRODUTOS */
+/* =========================
+   PRODUTOS
+========================= */
 
 .item{
   position:relative;
@@ -231,7 +256,7 @@ section h2 small{
   background:var(--card-hover);
 }
 
-.item>div:first-child{
+.item > div:first-child{
   min-width:0;
   padding-top:2px;
   grid-column:1;
@@ -251,7 +276,9 @@ section h2 small{
   line-height:1.35;
 }
 
-/* IMAGEM À DIREITA */
+/* =========================
+   IMAGEM
+========================= */
 
 .th{
   grid-column:2;
@@ -280,7 +307,16 @@ section h2 small{
   cursor:zoom-in;
 }
 
-/* PREÇO À ESQUERDA */
+.th.erro-img{
+  font:600 11px Inter,sans-serif;
+  text-align:center;
+  padding:8px;
+  color:var(--mut);
+}
+
+/* =========================
+   PREÇO
+========================= */
 
 .f{
   grid-column:1;
@@ -309,11 +345,30 @@ section h2 small{
 }
 
 .preco small{
-  font:600 11px Inter;
+  font:600 11px Inter,sans-serif;
   color:var(--mut);
 }
 
-/* ZOOM */
+/* =========================
+   SEM RESULTADO
+========================= */
+
+.vazio{
+  padding:50px 15px;
+  text-align:center;
+  color:var(--mut);
+}
+
+.vazio strong{
+  display:block;
+  font:700 22px Fraunces,Georgia,serif;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+
+/* =========================
+   ZOOM
+========================= */
 
 .lb{
   position:fixed;
@@ -334,7 +389,7 @@ section h2 small{
 
 .lb img{
   max-width:100%;
-  max-height:75%;
+  max-height:75vh;
   object-fit:contain;
   border-radius:14px;
   background:var(--cream);
@@ -361,7 +416,9 @@ section h2 small{
   cursor:pointer;
 }
 
-/* RODAPÉ */
+/* =========================
+   RODAPÉ
+========================= */
 
 footer{
   margin:36px 0 20px;
@@ -407,17 +464,12 @@ footer{
   line-height:1.5;
 }
 
-/* SEM RESULTADO */
-
-.vazio{
-  padding:50px 0;
-  text-align:center;
-  color:var(--mut);
-}
-
-/* DESKTOP */
+/* =========================
+   DESKTOP
+========================= */
 
 @media(min-width:680px){
+
   .wrap{
     width:min(100%,980px);
     padding:0 22px;
@@ -438,9 +490,12 @@ footer{
   }
 }
 
-/* CELULAR PEQUENO */
+/* =========================
+   CELULAR PEQUENO
+========================= */
 
 @media(max-width:380px){
+
   .wrap{
     padding-left:11px;
     padding-right:11px;
@@ -459,13 +514,23 @@ footer{
   .item h3{
     font-size:14px;
   }
+
+  .item p{
+    font-size:12px;
+  }
+
+  .preco{
+    font-size:15px;
+  }
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
   <div class="wrap">
 
     <div class="top">
@@ -478,24 +543,36 @@ footer{
     </div>
 
   </div>
+
 </header>
 
+
 <div class="bar">
+
   <div class="wrap">
 
     <div class="search">
+
       <input
         id="q"
         type="search"
         placeholder="Buscar no cardápio..."
         aria-label="Buscar no cardápio"
+        autocomplete="off"
       >
+
     </div>
 
-    <nav class="tabs" id="tabs"></nav>
+    <nav
+      class="tabs"
+      id="tabs"
+      aria-label="Categorias do cardápio"
+    ></nav>
 
   </div>
+
 </div>
+
 
 <!-- MODAL DE IMAGEM -->
 
@@ -505,18 +582,32 @@ footer{
   role="dialog"
   aria-modal="true"
   aria-label="Foto ampliada"
+  aria-hidden="true"
 >
 
-  <button id="lbx" aria-label="Fechar">
+  <button
+    id="lbx"
+    type="button"
+    aria-label="Fechar imagem"
+  >
     &times;
   </button>
 
-  <img id="lbi" alt="">
+  <img
+    id="lbi"
+    alt=""
+  >
+
   <span id="lbt"></span>
 
 </div>
 
-<main class="wrap" id="main"></main>
+
+<main
+  class="wrap"
+  id="main"
+></main>
+
 
 <!-- RODAPÉ -->
 
@@ -530,7 +621,7 @@ footer{
     class="footer-review"
     href="https://www.google.com/search?q=Padaria+e+Confeitaria+BONAPPETTI+Palho%C3%A7a"
     target="_blank"
-    rel="noopener"
+    rel="noopener noreferrer"
   >
     Avalie a BONAPPETTI no Google
   </a>
@@ -539,7 +630,7 @@ footer{
     class="footer-instagram"
     href="https://www.instagram.com/bonappetti.palhoca/"
     target="_blank"
-    rel="noopener"
+    rel="noopener noreferrer"
   >
     @bonappetti.palhoca
   </a>
@@ -550,505 +641,837 @@ footer{
 
 </footer>
 
+
 <script>
 
-/* CONFIGURAÇÃO */
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
 const CONFIG = {
-  nome:"Padaria e Confeitaria BONAPPETTI",
-  logo:"7f8aaede-f93b-47b4-af04-6d6e8f09da04.png",
+  nome: "Padaria e Confeitaria BONAPPETTI",
+  logo: "7f8aaede-f93b-47b4-af04-6d6e8f09da04.png"
 };
 
-/* CATEGORIAS */
+
+/* =========================================================
+   CATEGORIAS
+========================================================= */
 
 const CATEGORIAS = {
-  caf:"Cafés",
-  bev:"Bebidas",
-  doc:"Doces",
-  bol:"Bolos e Tortas",
-  pao:"Pães",
-  sal:"Salgados",
-  lan:"Lanches",
-  bis:"Biscoitos",
-  fri:"Frios e Laticínios",
-  out:"Outros"
+
+  caf: "Cafés",
+  bev: "Bebidas",
+  doc: "Doces",
+  bol: "Bolos e Tortas",
+  pao: "Pães",
+  sal: "Salgados",
+  lan: "Lanches",
+  bis: "Biscoitos",
+  fri: "Frios e Laticínios",
+  out: "Outros"
+
 };
 
 
-/* FOTOS DOS PRODUTOS */
+/* =========================================================
+   FOTOS DOS PRODUTOS
+   Todos os arquivos devem estar em .jpg
+========================================================= */
 
 const FOTOS = {
-  "Café Bom Jesus Extraforte": "fotos/cafe bom jesus extraforte.jpg",
-  "Café torra média em grãos 100% arábica": "fotos/cafe simonetti torra media.jpg",
-  "Café gourmet torra clara e moído 100% arábica 250g": "fotos/cafe simonetti gourmet.jpg",
-  "Café especial torra clara e moído 100% arábica 250g": "fotos/cafe simonetti especial.jpg",
-  "Café superior torra média e moído 100% arábica 250g": "fotos/cafe simonetti superior.jpg",
-  "Café passado": "fotos/café passado.jpg",
-  "Café expresso": "fotos/cafe expresso.jpg",
-  "Leite Integral Tirol 1L": "fotos/leite.jpg",
-  "Caixa de bombom Nestlé 220g": "fotos/caixa de bombom.jpg",
-  "Carolina": "fotos/carolina.jpg",
-  "Cookie de red velvet": "fotos/cookie red.jpg",
-  "Brigadeiro casadinho": "fotos/casadinho.jpg",
-  "Brownie americano": "fotos/brownie.jpg",
-  "Brownie com cobertura": "fotos/brownie recheado.jpg",
-  "Pão francês": "fotos/pão frances.jpg",
-  "Pão de queijo": "fotos/pao de queijo.jpg",
-  "Pão de queijo mini": "fotos/mini pao de queijo.jpg",
-  "Pamonha salgada ou doce": "fotos/pamonha.jpg",
-  "Pão de queijo de provolone": "fotos/pao de queijo longo.jpg",
-  "Almôndega": "fotos/almondega.jpg",
-  "Pastel": "fotos/pastel.jpg",
-  "Panetone": "fotos/panetone.jpg",
-  "Rosquinha": "fotos/rosquinha.jpg",
-  "Bala Valda 12g": "fotos/bala valda.jpg",
-  "Brigadeiro de coco": "fotos/beijinho.jpg",
-  "Brigadeiro bicho de pé": "fotos/bicho de pe.jpg",
-  "Bolacha pintada": "fotos/biscoitinho pintado.jpg",
-  "Bolo de banana": "fotos/bolo de banana.jpg",
-  "Bolo de coco": "fotos/bolo de coco.jpg",
-  "Bolo floresta negra": "fotos/bolo floresta negra.jpg",
-  "Brigadeiro de chocolate": "fotos/brigadeiro.jpg",
-  "Coxinha": "fotos/coxinha.jpg",
-  "Doguinho": "fotos/doguinho.jpg",
-  "Espetinho de frango": "fotos/espetinho de frnago.jpg",
-  "Farinha de rosca": "fotos/farinha de rosca.jpg",
-  "Folhado": "fotos/folhado.jpg",
-  "Macarons": "fotos/macarons.jpg",
-  "Mentos": "fotos/mentos.jpg",
-  "Mini sonho": "fotos/mini sonho.jpg",
-  "Mousse de chocolate": "fotos/mousse de chocolate.jpg",
-  "Orelha de gato": "fotos/orelha de gato.jpg",
-  "Chocolate Ouro Branco": "fotos/ouro branco.jpg",
-  "Doce pé de moça": "fotos/pe de moça.jpg",
-  "Pringles original": "fotos/pringles.jpg",
-  "Quindim em fatia": "fotos/quindim fatia.jpg",
-  "Quindim": "fotos/quindim.jpg",
-  "Sonho": "fotos/sonho.jpg",
-  "Pão torrado": "fotos/torradinha.jpg",
-  "Mini tortinha de coco queimado": "fotos/torta coco queimado.jpg",
-  "Mini tortinha de uva": "fotos/torta de uva.jpg",
-  "Pão redondo": "fotos/pao bola.jpg",
-  "Panetone de chocolate": "fotos/panetone choco.jpg",
-  "Panetone de pistache": "fotos/panetone pistache.jpg",
-  "Pet four de nozes": "fotos/pet four.jpg",
-  "Torta de coco": "fotos/torta coco.jpg",
-  "Torta (salgada)": "fotos/torta salgada.jpg",
-  "Chocolate Kit Kat": "fotos/kitkat.jpg",
-  "Biscoito amanteigado com goiabada": "fotos/bisc amanteigado.jpg",
-  "Panettone Pinheiro": "fotos/panetone pinheiro.jpg",
-  "Bombom de nozes": "fotos/bombom nozes.jpg",
-  "Bolo de prestígio (fatia)": "fotos/bolo prestigio.jpg",
-  "Mini tortinha de maracujá": "fotos/tortinha maracuja.jpg",
-  "Torta de maracujá": "fotos/torta fatia maracuja.jpg",
-  "Mini tortinha de chocolate": "fotos/mini torta de prestigio.jpg",
-  "Folhado de cereja": "fotos/folhado com cereja.jpg",
-  "Cookie tradicional": "fotos/cookie trad.jpg",
-  "Almofadinha": "fotos/almofadinha.jpg",
-  "Cookie de chocolate": "fotos/cookie chocolate.jpg",
-  "Guaraná Antarctica Zero": "fotos/guarana.jpg",
-  "Pirulito Fruslytto morango": "fotos/pirulito fruslytto.jpg",
-  "Rocambole de bolacha": "fotos/rocambole de bolacha.jpg",
-  "Rocambole de cereja": "fotos/rocambole cereja.jpg",
-  "Chiclete Trident": "fotos/trident.jpg",
-  "Pudim (fatia)": "fotos/pudim fatia.jpg",
-  "Wrap natural": "fotos/wrap.jpg",
-  "Bolacha de coco (34,90)": "fotos/bolacha coco.jpg",
-  "Bolo chocolate": "fotos/bolo choco fatia.jpg",
-  "Pão de mel": "fotos/pao de mel.jpg",
-  "Bolo cenoura": "fotos/bolo cenoura.jpg",
-  "Bolo amendoim": "fotos/bolo amendoim.jpg",
-  "Bolo M&Ms": "fotos/bolo mem.jpg",
-  "Cuca": "fotos/cuca.jpg",
-  "Sanduiche natural": "fotos/pao natural.jpg",
-  "Sanduiche natural redondo": "fotos/pao natural redondo.jpg",
-  "Torta salgada de calabresa": "fotos/empada calabresa.jpg",
-  "Torta salgada de brocolis": "fotos/empadao de brocolis.jpg",
-  "Torta salgada de frango": "fotos/torta de frango.jpg",
-  "Folhado de banana": "fotos/folhado banana.jpg",
-  "Folhado de chocolate": "fotos/folhado de choco.jpg",
-  "Barrinha de cereal": "fotos/barrinha.jpg",
-  "Pão de batata de bacon": "fotos/pao de batata bacon.jpg",
-  "Pão de batata de frango": "fotos/pao de batata frango.jpg",
-  "Pão de batata de carne": "fotos/pao de batata carne.jpg",
-  "Pão de batata de brocolis com ricota": "fotos/pao de batata brocolis e ricota.jpg",
-  "Folhado de frango": "fotos/folhado frango.jpg",
-  "Estrudel de maça": "fotos/estrudel maça.jpg",
-   "100% suco de laranja Longa Vita 290ml": "fotos/longavita 290ml.jpg",
-  "100% suco de uva Campo Largo 250ml": "fotos/campolargo 250ml.jpg",
-  "100% suco de laranja Campo Largo 250ml": "fotos/campolargo 250ml laranja.jpg",
-  "100% suco de uva Prats 300ml": "fotos/prats uva 300ml.jpg",
-  "100% suco de laranja Prats 900ml": "fotos/prats laranja 900ml.jpg",
-  "100% suco de uva Campo Largo 900ml": "fotos/campolargo uva 500ml.jpg",
-  "Néctar de goiaba 40% de suco Longa Vita 900ml": "fotos/longavita goiaba 900ml.jpg",
-  "Suco sabor laranja Del Valle Kapo 200ml": "fotos/delvalle kapo 200ml laranja.jpg",
-  "Água de coco integral Campo Largo 900ml": "fotos/campolargo agua de coco 900ml.jpg",
-  "DuCoco água de coco 200ml": "fotos/ducoco agua de coco 200ml.jpg",
 
-  "Guaraná Pureza 1L": "fotos/pureza 1l.jpg",
-  "Guaraná Pureza 2L": "fotos/pureza 2l.jpg",
+  "Café Bom Jesus Extraforte 500g":
+    "fotos/cafe bom jesus extraforte.jpg",
 
-  "Coca-Cola 2L": "fotos/cocacola 2l.jpg",
-  "Coca-Cola 350ml": "fotos/coca original 350ml.jpg",
-  "Coca-Cola Zero Açúcar 500ml": "fotos/coca zero 350ml.jpg",
-  "Coca-Cola Zero Açúcar 1L": "fotos/cocacola1l.jpg",
+  "Café torra média em grãos 100% arábica":
+    "fotos/cafe simonetti torra media.jpg",
 
-  "Refrigerante de limão siciliano Fys Red Bull 250ml": "fotos/fys limao siciliano refri.jpg",
+  "Café gourmet torra clara e moído 100% arábica 250g":
+    "fotos/cafe simonetti gourmet.jpg",
 
-  "Água mineral natural com gás Armazém 1,5L": "fotos/agua com gas 1,5l armazem.jpg",
-  "Água mineral natural sem gás Armazém 1,5L": "fotos/agua sem gas 1,5l armazem.jpg",
-  "Água mineral natural com gás Santa Rita 1,5L": "fotos/santa rita agua com gaz 1,5l.jpg",
+  "Café especial torra clara e moído 100% arábica 250g":
+    "fotos/cafe simonetti especial.jpg",
 
-  "Energético Baly tradicional sem açúcar 473ml": "fotos/baly tradicional sem açúcar 473ml.jpg",
-  "Energético Baly tradicional 473ml": "fotos/baly tradicional 473ml.jpg",
-  "Energético Baly amora com hortelã 473ml": "fotos/baly amora com hortela 473ml.jpg",
-  "Energético Baly tradicional 2L": "fotos/baly tradicional 2l.jpg",
-  "Energético Monster tradicional sem açúcar 473ml": "fotos/monster tradicional sem açúcar 473ml.jpg",
+  "Café superior torra média e moído 100% arábica 250g":
+    "fotos/cafe simonetti superior.jpg",
 
-  "Achocolatado Tirol Kids 200ml": "fotos/achocolatado tirol kids.jpg",
-  "Baly Kids uva 220ml": "fotos/baly kids uva.jpg",
-  "Baly Kids tutti frutti 220ml": "fotos/baly kids tuttifrutti.jpg",
+  "Café passado":
+    "fotos/café passado.jpg",
 
-  "Choco Leite 200ml de vidro": "fotos/chocolate 200ml vidro.jpg",
-  "Choco Leite 260ml": "fotos/chocolate 260ml.jpg",
-  "Nescau 180ml": "fotos/nescau 180ml.jpg",
+  "Café expresso":
+    "fotos/cafe expresso.jpg",
 
-  "Leite fermentado tradicional, morango ou uva 80g": "fotos/leite fermentado scherek.jpg",
-  "Pro Force chocolate 15g de proteína Piracanjuba 250ml": "fotos/piracanjuba pro force chocolate.jpg",
+  "Leite Integral Tirol 1L":
+    "fotos/leite.jpg",
 
-  "Cerveja Budweiser Zero 330ml": "fotos/budweiser zero.jpg",
-  "Cerveja Sol 330ml": "fotos/cerveja sol.jpg",
-  "Cerveja Brahma 350ml": "fotos/brahma chopp 250ml.jpg",
-  "Cerveja Schin 350ml": "fotos/cerveja schin 350ml.jpg",
-  "Cerveja Heineken original 330ml": "fotos/heineken 330ml.jpg",
-  "Cerveja Heineken sem glúten 330ml": "fotos/heineken 330ml sem gluten.jpg",
-  "Cerveja Amstel Large puro malte 250ml": "fotos/amstel 350ml.jpg",
+  "Caixa de bombom Nestlé 220g":
+    "fotos/caixa de bombom.jpg",
 
-  "Requeijão cremoso Porto Novo 400g": "fotos/porto novo requeijao 400g.jpg",
-  "Requeijão cremoso Porto Novo 180g": "fotos/porto novo requeijao 180g.jpg",
-  "Requeijão cremoso light Porto Novo 180g": "fotos/porto novo requeijao light 180g.jpg",
-  "Requeijão cremoso zero lactose Porto Novo 180g": "fotos/porto novo requeijao zero lactose.jpg",
+  "Carolina":
+    "fotos/carolina.jpg",
 
-  "Requeijão cremoso Tirol 180g": "fotos/tirol requeijao cremoso 180g.jpg",
-  "Requeijão cremoso light Tirol 180g": "fotos/tirol requeijao cremoso light 180g.jpg",
+  "Cookie de red velvet":
+    "fotos/cookie red.jpg",
 
-  "Manteiga de primeira qualidade sem sal Porto Novo 200g": "fotos/porto novo manteiga 200g.jpg",
-  "Manteiga de primeira qualidade com sal Porto Novo 200g": "fotos/porto novo manteiga com sal200g.jpg",
-  "Margarina com creme de leite Delícia": "fotos/manteiga com creme de leite delicia.jpg",
+  "Brigadeiro casadinho":
+    "fotos/casadinho.jpg",
 
-  "Nata Tirol 300g": "fotos/tirol nata 300g.jpg",
-  "Nata Porto Novo 280g": "fotos/porto novo nata 280g.jpg",
+  "Brownie americano":
+    "fotos/brownie.jpg",
 
-  "Queijo tipo quark Porto Novo 250g": "fotos/porto novo queijo tipo quark 250g.jpg",
-  "Queijo tipo quark light Porto Novo 250g": "fotos/porto novo queijo tipo quark light 250g.jpg",
+  "Brownie com cobertura":
+    "fotos/brownie recheado.jpg",
 
-  "Creme de ricota Porto Novo 150g": "fotos/porto novo creme de ricota 150g.jpg",
-  "Queijo mussarela fatiado Tirol 150g": "fotos/tirol queijo mussarela 150g.jpg",
-  "Queijo prato (lanche) fatiado Tirol 150g": "fotos/tirol queijo prato 150g.jpg",
+  "Pão francês":
+    "fotos/pão frances.jpg",
 
-  "Apresuntado fatiado 150g": "fotos/apresuntado fatiado 150g lactofrios.jpg",
-  "Presunto cozido fatiado 120g": "fotos/friolat presunto cozido 120g.jpg",
-  "Mortadela Perdigão": "fotos/perdigão mortadela.jpg",
-  "Mortadela de ave (frango) fatiado Friolat 150g": "fotos/friolat mortadela de aves (frango) 150g.jpg",
-  "Mortadela com toucinho Produtos da Fazenda 150g": "fotos/mortadela com toucinho produtos da fazenda.jpg",
-  "Mortadela tradicional defumada Perdigão Ouro 200g": "fotos/perdigão mortadela ouro.jpg",
-  "Salsicha Friolat 300g": "fotos/friolat salsicha300g.jpg",
+  "Pão de queijo":
+    "fotos/pao de queijo.jpg",
 
-  "Patê de frango com ervas finas Excelsior 100g": "fotos/pate frango com ervas finas excelsior.jpg",
-  "Patê de carne suína sabor presunto Excelsior 100g": "fotos/pate carne suina sabor presunto excelsior.jpg",
+  "Pão de queijo mini":
+    "fotos/mini pao de queijo.jpg",
+
+  "Pamonha salgada ou doce":
+    "fotos/pamonha.jpg",
+
+  "Pão de queijo de provolone":
+    "fotos/pao de queijo longo.jpg",
+
+  "Almôndega":
+    "fotos/almondega.jpg",
+
+  "Pastel":
+    "fotos/pastel.jpg",
+
+  "Panetone":
+    "fotos/panetone.jpg",
+
+  "Rosquinha":
+    "fotos/rosquinha.jpg",
+
+  "Bala Valda 12g":
+    "fotos/bala valda.jpg",
+
+  "Brigadeiro de coco":
+    "fotos/beijinho.jpg",
+
+  "Brigadeiro bicho de pé":
+    "fotos/bicho de pe.jpg",
+
+  "Bolacha pintada":
+    "fotos/biscoitinho pintado.jpg",
+
+  "Bolo de banana":
+    "fotos/bolo de banana.jpg",
+
+  "Bolo de coco":
+    "fotos/bolo de coco.jpg",
+
+  "Bolo floresta negra":
+    "fotos/bolo floresta negra.jpg",
+
+  "Brigadeiro de chocolate":
+    "fotos/brigadeiro.jpg",
+
+  "Coxinha":
+    "fotos/coxinha.jpg",
+
+  "Doguinho":
+    "fotos/doguinho.jpg",
+
+  "Espetinho de frango":
+    "fotos/espetinho de frnago.jpg",
+
+  "Farinha de rosca":
+    "fotos/farinha de rosca.jpg",
+
+  "Folhado":
+    "fotos/folhado.jpg",
+
+  "Macarons":
+    "fotos/macarons.jpg",
+
+  "Mentos":
+    "fotos/mentos.jpg",
+
+  "Mini sonho":
+    "fotos/mini sonho.jpg",
+
+  "Mousse de chocolate":
+    "fotos/mousse de chocolate.jpg",
+
+  "Orelha de gato":
+    "fotos/orelha de gato.jpg",
+
+  "Chocolate Ouro Branco":
+    "fotos/ouro branco.jpg",
+
+  "Doce pé de moça":
+    "fotos/pe de moça.jpg",
+
+  "Pringles original":
+    "fotos/pringles.jpg",
+
+  "Quindim em fatia":
+    "fotos/quindim fatia.jpg",
+
+  "Quindim":
+    "fotos/quindim.jpg",
+
+  "Sonho":
+    "fotos/sonho.jpg",
+
+  "Pão torrado":
+    "fotos/torradinha.jpg",
+
+  "Mini tortinha de coco queimado":
+    "fotos/torta coco queimado.jpg",
+
+  "Mini tortinha de uva":
+    "fotos/torta de uva.jpg",
+
+  "Pão redondo":
+    "fotos/pao bola.jpg",
+
+  "Panetone de chocolate":
+    "fotos/panetone choco.jpg",
+
+  "Panetone de pistache":
+    "fotos/panetone pistache.jpg",
+
+  "Pet four de nozes":
+    "fotos/pet four.jpg",
+
+  "Torta de coco":
+    "fotos/torta coco.jpg",
+
+  "Torta (salgada)":
+    "fotos/torta salgada.jpg",
+
+  "Chocolate Kit Kat":
+    "fotos/kitkat.jpg",
+
+  "Biscoito amanteigado com goiabada":
+    "fotos/bisc amanteigado.jpg",
+
+  "Panettone Pinheiro":
+    "fotos/panetone pinheiro.jpg",
+
+  "Bombom de nozes":
+    "fotos/bombom nozes.jpg",
+
+  "Bolo de prestígio (fatia)":
+    "fotos/bolo prestigio.jpg",
+
+  "Mini tortinha de maracujá":
+    "fotos/tortinha maracuja.jpg",
+
+  "Torta de maracujá":
+    "fotos/torta fatia maracuja.jpg",
+
+  "Mini tortinha de chocolate":
+    "fotos/mini torta de prestigio.jpg",
+
+  "Folhado de cereja":
+    "fotos/folhado com cereja.jpg",
+
+  "Cookie tradicional":
+    "fotos/cookie trad.jpg",
+
+  "Almofadinha":
+    "fotos/almofadinha.jpg",
+
+  "Cookie de chocolate":
+    "fotos/cookie chocolate.jpg",
+
+  "Guaraná Antarctica Zero":
+    "fotos/guarana.jpg",
+
+  "Pirulito Fruslytto morango":
+    "fotos/pirulito fruslytto.jpg",
+
+  "Rocambole de bolacha":
+    "fotos/rocambole de bolacha.jpg",
+
+  "Rocambole de cereja":
+    "fotos/rocambole cereja.jpg",
+
+  "Chiclete Trident":
+    "fotos/trident.jpg",
+
+  "Pudim (fatia)":
+    "fotos/pudim fatia.jpg",
+
+  "Wrap natural":
+    "fotos/wrap.jpg",
+
+  "Bolacha de coco (34,90)":
+    "fotos/bolacha coco.jpg",
+
+  "Bolo chocolate":
+    "fotos/bolo choco fatia.jpg",
+
+  "Pão de mel":
+    "fotos/pao de mel.jpg",
+
+  "Bolo cenoura":
+    "fotos/bolo cenoura.jpg",
+
+  "Bolo amendoim":
+    "fotos/bolo amendoim.jpg",
+
+  "Bolo M&Ms":
+    "fotos/bolo mem.jpg",
+
+  "Cuca":
+    "fotos/cuca.jpg",
+
+  "Sanduiche natural":
+    "fotos/pao natural.jpg",
+
+  "Sanduiche natural redondo":
+    "fotos/pao natural redondo.jpg",
+
+  "Torta salgada de calabresa":
+    "fotos/empada calabresa.jpg",
+
+  "Torta salgada de brocolis":
+    "fotos/empadao de brocolis.jpg",
+
+  "Torta salgada de frango":
+    "fotos/torta de frango.jpg",
+
+  "Folhado de banana":
+    "fotos/folhado banana.jpg",
+
+  "Folhado de chocolate":
+    "fotos/folhado de choco.jpg",
+
+  "Barrinha de cereal":
+    "fotos/barrinha.jpg",
+
+  "Pão de batata de bacon":
+    "fotos/pao de batata bacon.jpg",
+
+  "Pão de batata de frango":
+    "fotos/pao de batata frango.jpg",
+
+  "Pão de batata de carne":
+    "fotos/pao de batata carne.jpg",
+
+  "Pão de batata de brocolis com ricota":
+    "fotos/pao de batata brocolis e ricota.jpg",
+
+  "Folhado de frango":
+    "fotos/folhado frango.jpg",
+
+  "Estrudel de maça":
+    "fotos/estrudel maça.jpg",
+
+  "100% suco de laranja Longa Vita 290ml":
+    "fotos/longavita 290ml.jpg",
+
+  "100% suco de uva Campo Largo 250ml":
+    "fotos/campolargo 250ml.jpg",
+
+  "100% suco de laranja Campo Largo 250ml":
+    "fotos/campolargo 250ml laranja.jpg",
+
+  "100% suco de uva Prats 300ml":
+    "fotos/prats uva 300ml.jpg",
+
+  "100% suco de laranja Prats 900ml":
+    "fotos/prats laranja 900ml.jpg",
+
+  "100% suco de uva Campo Largo 900ml":
+    "fotos/campolargo uva 900ml.jpg",
+
+  "Néctar de goiaba 40% de suco Longa Vita 900ml":
+    "fotos/longavita goiaba 900ml.jpg",
+
+  "Suco sabor laranja Del Valle Kapo 200ml":
+    "fotos/delvalle kapo 200ml laranja.jpg",
+
+  "Água de coco integral Campo Largo 900ml":
+    "fotos/campolargo agua de coco 900ml.jpg",
+
+  "DuCoco água de coco 200ml":
+    "fotos/ducoco agua de coco 200ml.jpg",
+
+  "Guaraná Pureza 1L":
+    "fotos/pureza 1l.jpg",
+
+  "Guaraná Pureza 2L":
+    "fotos/pureza 2l.jpg",
+
+  "Coca-Cola 2L":
+    "fotos/cocacola 2l.jpg",
+
+  "Coca-Cola 350ml":
+    "fotos/coca original 350ml.jpg",
+
+  "Coca-Cola Zero Açúcar 500ml":
+    "fotos/coca zero 500ml.jpg",
+
+  "Coca-Cola Zero Açúcar 1L":
+    "fotos/cocacola1l.jpg",
+
+  "Refrigerante de limão siciliano Fys Red Bull 250ml":
+    "fotos/fys limao siciliano refri.jpg",
+
+  "Água mineral natural com gás Armazém 1,5L":
+    "fotos/agua com gas 1,5l armazem.jpg",
+
+  "Água mineral natural sem gás Armazém 1,5L":
+    "fotos/agua sem gas 1,5l armazem.jpg",
+
+  "Água mineral natural com gás Santa Rita 1,5L":
+    "fotos/santa rita agua com gaz 1,5l.jpg",
+
+  "Energético Baly tradicional sem açúcar 473ml":
+    "fotos/baly tradicional sem açúcar 473ml.jpg",
+
+  "Energético Baly tradicional 473ml":
+    "fotos/baly tradicional 473ml.jpg",
+
+  "Energético Baly amora com hortelã 473ml":
+    "fotos/baly amora com hortela 473ml.jpg",
+
+  "Energético Baly tradicional 2L":
+    "fotos/baly tradicional 2l.jpg",
+
+  "Energético Monster tradicional sem açúcar 473ml":
+    "fotos/monster tradicional sem açúcar 473ml.jpg",
+
+  "Achocolatado Tirol Kids 200ml":
+    "fotos/achocolatado tirol kids.jpg",
+
+  "Baly Kids uva 220ml":
+    "fotos/baly kids uva.jpg",
+
+  "Baly Kids tutti frutti 220ml":
+    "fotos/baly kids tuttifrutti.jpg",
+
+  "Choco Leite 200ml de vidro":
+    "fotos/chocolate 200ml vidro.jpg",
+
+  "Choco Leite 260ml":
+    "fotos/chocolate 260ml.jpg",
+
+  "Nescau 180ml":
+    "fotos/nescau 180ml.jpg",
+
+  "Leite fermentado tradicional, morango ou uva 80g":
+    "fotos/leite fermentado scherek.jpg",
+
+  "Pro Force chocolate 15g de proteína Piracanjuba 250ml":
+    "fotos/piracanjuba pro force chocolate.jpg",
+
+  "Cerveja Budweiser Zero 330ml":
+    "fotos/budweiser zero.jpg",
+
+  "Cerveja Sol 330ml":
+    "fotos/cerveja sol.jpg",
+
+  "Cerveja Brahma 350ml":
+    "fotos/brahma chopp 250ml.jpg",
+
+  "Cerveja Schin 350ml":
+    "fotos/cerveja schin 350ml.jpg",
+
+  "Cerveja Heineken original 330ml":
+    "fotos/heineken 330ml.jpg",
+
+  "Cerveja Heineken sem glúten 330ml":
+    "fotos/heineken 330ml sem gluten.jpg",
+
+  "Cerveja Amstel Large puro malte 250ml":
+    "fotos/amstel 350ml.jpg",
+
+  "Requeijão cremoso Porto Novo 400g":
+    "fotos/porto novo requeijao 400g.jpg",
+
+  "Requeijão cremoso Porto Novo 180g":
+    "fotos/porto novo requeijao 180g.jpg",
+
+  "Requeijão cremoso light Porto Novo 180g":
+    "fotos/porto novo requeijao light 180g.jpg",
+
+  "Requeijão cremoso zero lactose Porto Novo 180g":
+    "fotos/porto novo requeijao zero lactose.jpg",
+
+  "Requeijão cremoso Tirol 180g":
+    "fotos/tirol requeijao cremoso 180g.jpg",
+
+  "Requeijão cremoso light Tirol 180g":
+    "fotos/tirol requeijao cremoso light 180g.jpg",
+
+  "Manteiga de primeira qualidade sem sal Porto Novo 200g":
+    "fotos/porto novo manteiga 200g.jpg",
+
+  "Manteiga de primeira qualidade com sal Porto Novo 200g":
+    "fotos/porto novo manteiga com sal200g.jpg",
+
+  "Margarina com creme de leite Delícia":
+    "fotos/manteiga com creme de leite delicia.jpg",
+
+  "Nata Tirol 300g":
+    "fotos/tirol nata 300g.jpg",
+
+  "Nata Porto Novo 280g":
+    "fotos/porto novo nata 280g.jpg",
+
+  "Queijo tipo quark Porto Novo 250g":
+    "fotos/porto novo queijo tipo quark 250g.jpg",
+
+  "Queijo tipo quark light Porto Novo 250g":
+    "fotos/porto novo queijo tipo quark light 250g.jpg",
+
+  "Creme de ricota Porto Novo 150g":
+    "fotos/porto novo creme de ricota 150g.jpg",
+
+  "Queijo mussarela fatiado Tirol 150g":
+    "fotos/tirol queijo mussarela 150g.jpg",
+
+  "Queijo prato (lanche) fatiado Tirol 150g":
+    "fotos/tirol queijo prato 150g.jpg",
+
+  "Apresuntado fatiado 150g":
+    "fotos/apresuntado fatiado 150g lactofrios.jpg",
+
+  "Presunto cozido fatiado 120g":
+    "fotos/friolat presunto cozido 120g.jpg",
+
+  "Mortadela Perdigão":
+    "fotos/perdigão mortadela.jpg",
+
+  "Mortadela de ave (frango) fatiado Friolat 150g":
+    "fotos/friolat mortadela de aves (frango) 150g.jpg",
+
+  "Mortadela com toucinho Produtos da Fazenda 150g":
+    "fotos/mortadela com toucinho produtos da fazenda.jpg",
+
+  "Mortadela tradicional defumada Perdigão Ouro 200g":
+    "fotos/perdigão mortadela ouro.jpg",
+
+  "Salsicha Friolat 300g":
+    "fotos/friolat salsicha300g.jpg",
+
+  "Patê de frango com ervas finas Excelsior 100g":
+    "fotos/pate frango com ervas finas excelsior.jpg",
+
+  "Patê de carne suína sabor presunto Excelsior 100g":
+    "fotos/pate carne suina sabor presunto excelsior.jpg"
 
 };
 
 
-/* PRODUTOS */
+/* =========================================================
+   PRODUTOS
+========================================================= */
 
 const SEM = "--.--";
 
 const produtos = [
 
-/* CAFÉS */
+  /* CAFÉS */
 
-["Café ao leite","caf",SEM,"un"],
-["Café passado","caf",SEM,"un"],
-["Café expresso","caf",SEM,"un"],
-["Café de máquina","caf",SEM,"un"],
-["Capuccino","caf",SEM,"un"],
-["Capuccino com canela","caf",SEM,"un"],
-["Chocolate quente","caf",SEM,"un"],
+  ["Café ao leite","caf",SEM,"un"],
+  ["Café passado","caf",SEM,"un"],
+  ["Café expresso","caf",SEM,"un"],
+  ["Café de máquina","caf",SEM,"un"],
+  ["Capuccino","caf",SEM,"un"],
+  ["Capuccino com canela","caf",SEM,"un"],
+  ["Chocolate quente","caf",SEM,"un"],
 
-["Café Bom Jesus Extraforte 500g","caf",29.90,"un"],
-["Café torra média em grãos 100% arábica","caf",39.90,"un"],
-["Café gourmet torra clara e moído 100% arábica 250g","caf",39.90,"un"],
-["Café especial torra clara e moído 100% arábica 250g","caf",39.90,"un"],
-["Café superior torra média e moído 100% arábica 250g","caf",39.90,"un"],
-
-
-/* BEBIDAS */
-
-["Leite Integral Tirol 1L","bev",5.99,"un"],
-["100% suco de laranja Longa Vita 290ml","bev",7.00,"un"],
-["100% suco de uva Campo Largo 250ml","bev",8.00,"un"],
-["100% suco de laranja Campo Largo 250ml","bev",7.00,"un"],
-["100% suco de uva Prats 300ml","bev",8.90,"un"],
-["Néctar de laranja 50% de suco Longa Vita 900ml","bev",SEM,"un"],
-["100% suco de laranja Prats 900ml","bev",15.00,"un"],
-["100% suco de uva Campo Largo 900ml","bev",18.00,"un"],
-["Néctar de goiaba 40% de suco Longa Vita 900ml","bev",11.99,"un"],
-["Suco sabor laranja Del Valle Kapo 200ml","bev",4.99,"un"],
-["Suco de laranja natural","bev",SEM,"un"],
-["Água de coco integral Campo Largo 900ml","bev",SEM,"un"],
-["DuCoco água de coco 200ml","bev",5.00,"un"],
-["Guaraná Pureza 1L","bev",8.00,"un"],
-["Guaraná Pureza 2L","bev",SEM,"un"],
-["Guaraná Antarctica Zero","bev",5.90,"un"],
-["Coca-Cola 2L","bev",SEM,"un"],
-["Coca-Cola 350ml","bev",7.00,"un"],
-["Coca-Cola Zero Açúcar 500ml","bev",8.50,"un"],
-["Coca-Cola Zero Açúcar 1L","bev",SEM,"un"],
-["Refrigerante de limão siciliano Fys Red Bull 250ml","bev",13.99,"un"],
-["Água mineral natural com gás Armazém 1,5L","bev",SEM,"un"],
-["Água mineral natural sem gás Armazém 1,5L","bev",SEM,"un"],
-["Água mineral natural com gás Santa Rita 1,5L","bev",3.99,"un"],
-["Energético Baly tradicional sem açúcar 473ml","bev",8.99,"un"],
-["Energético Baly tradicional 473ml","bev",8.99,"un"],
-["Energético Baly amora com hortelã 473ml","bev",8.99,"un"],
-["Energético Baly tradicional 2L","bev",SEM,"un"],
-["Energético Monster tradicional sem açúcar 473ml","bev",12.99,"un"],
-["Achocolatado Tirol Kids 200ml","bev",SEM,"un"],
-["Baly Kids uva 220ml","bev",7.00,"un"],
-["Baly Kids tutti frutti 220ml","bev",7.00,"un"],
-["Choco Leite 220ml","bev",SEM,"un"],
-["Choco Leite 200ml de vidro","bev",8.00,"un"],
-["Choco Leite 260ml","bev",7.00,"un"],
-["Nescau 180ml","bev",SEM,"un"],
-["Leite fermentado tradicional, morango ou uva 80g","bev",2.00,"un"],
-["Pro Force chocolate 15g de proteína Piracanjuba 250ml","bev",12.00,"un"],
-["Cerveja Budweiser Zero 330ml","bev",SEM,"un"],
-["Cerveja Sol 330ml","bev",7.00,"un"],
-["Cerveja Brahma 350ml","bev",4.50,"un"],
-["Cerveja Schin 350ml","bev",3.90,"un"],
-["Cerveja Heineken original 330ml","bev",9.99,"un"],
-["Cerveja Heineken sem glúten 330ml","bev",12.00,"un"],
-["Cerveja Amstel Large puro malte 250ml","bev",6.00,"un"],
+  ["Café Bom Jesus Extraforte 500g","caf",29.90,"un"],
+  ["Café torra média em grãos 100% arábica","caf",39.90,"un"],
+  ["Café gourmet torra clara e moído 100% arábica 250g","caf",39.90,"un"],
+  ["Café especial torra clara e moído 100% arábica 250g","caf",39.90,"un"],
+  ["Café superior torra média e moído 100% arábica 250g","caf",39.90,"un"],
 
 
-/* DOCES */
+  /* BEBIDAS */
 
-["Caixa de bombom Nestlé 220g","doc",18.90,"un"],
-["Bombom de nozes","doc",6.00,"un"],
-["Brigadeiro casadinho","doc",6.00,"un"],
-["Brigadeiro bicho de pé","doc",5.00,"un"],
-["Brigadeiro de chocolate","doc",5.00,"un"],
-["Brigadeiro de coco","doc",5.00,"un"],
-["Doce pé de moça","doc",3.90,"un"],
-["Mini sonho","doc",1.00,"un"],
-["Sonho","doc",5.00,"un"],
-["Quindim","doc",7.00,"un"],
-["Brownie com cobertura","doc",10.00,"un"],
-["Brownie americano","doc",SEM,"un"],
-["Cookie de red velvet","doc",SEM,"un"],
-["Cookie de chocolate","doc",SEM,"un"],
-["Cookie tradicional","doc",SEM,"un"],
-["Alfajor de doce de leite 55g","doc",7.50,"un"],
-["Folhado","doc",10.00,"un"],
-["Folhado de banana","doc",SEM,"un"],
-["Folhado com doce","doc",2.00,"un"],
-["Folhado de cereja","doc",SEM,"un"],
-["Mousse de chocolate","doc",6.90,"un"],
-["Pudim mini","doc",10.00,"un"],
-["Pão de mel","doc",46.90,"kg"],
-["Goiabinha","doc",49.90,"kg"],
-["Suspiro","doc",49.90,"kg"],
-["Chocolate Negresco","doc",2.00,"un"],
-["Chocolate Smash","doc",2.00,"un"],
-["Chocolate Prestígio","doc",2.00,"un"],
-["Chocolate Kit Kat","doc",2.00,"un"],
-["Chocolate Ouro Branco","doc",2.00,"un"],
-["Chiclete Trident","doc",3.50,"un","Consultar sabores"],
-["Pirulito Chupa-Chups laranja","doc",2.00,"un"],
-["Pirulito Chupa-Chups morango","doc",1.50,"un"],
-["Pirulito Fruslytto morango","doc",SEM,"un"],
-["Bala Valda 12g","doc",SEM,"un"],
-["Mentos","doc",SEM,"un"],
-["Barrinha de cereal","doc",SEM,"un"],
-["Carolina","doc",SEM,"un"],
-["Folhado de chocolate","doc",SEM,"un"],
-["Estrudel de maça","doc",SEM,"un"],
-
-
-/* BOLOS E TORTAS */
-
-["Bolo de prestígio (fatia)","bol",15.00,"fatia"],
-["Bolo de frutas vermelhas (fatia)","bol",15.00,"fatia"],
-["Torta de morango com nata","bol",10.00,"fatia"],
-["Torta de coco","bol",15.00,"fatia"],
-["Torta de maracujá","bol",10.00,"fatia"],
-["Torta de banana","bol",SEM,"fatia"],
-["Torta de limão","bol",SEM,"fatia"],
-["Torta alemã (fatia)","bol",SEM,"fatia"],
-["Torta fria","bol",SEM,"un"],
-["Pudim (fatia)","bol",10.00,"fatia"],
-["Quindim em fatia","bol",SEM,"fatia"],
-["Rocambole de cereja","bol",10.00,"fatia"],
-["Rocambole de bolacha","bol",10.00,"fatia"],
-["Mini tortinha de uva","bol",10.00,"un"],
-["Mini tortinha de coco queimado","bol",8.00,"un"],
-["Mini tortinha de chocolate","bol",10.00,"un"],
-["Mini tortinha de limão","bol",10.00,"un"],
-["Mini tortinha de maracujá","bol",10.00,"un"],
-["Bolo misto","bol",4.99,"un"],
-["Bolo brigadeiro","bol",SEM,"un"],
-["Bolo floresta negra","bol",SEM,"un"],
-["Bolo de paçoca","bol",49.90,"kg"],
-["Bolo de banana","bol",29.90,"kg"],
-["Bolo mesclado","bol",29.90,"kg"],
-["Bolo de laranja","bol",29.90,"kg"],
-["Bolo de maçã","bol",29.90,"kg"],
-["Bolo de coco","bol",29.90,"kg"],
-["Bolo floresta negra","bol",29.90,"kg"],
-["Bolo formigueiro","bol",29.90,"kg"],
-["Bolo amanteigado","bol",29.90,"kg"],
-["Bolo de nozes","bol",24.90,"kg"],
-["Bolo de cenoura com calda de chocolate","bol",SEM,"kg"],
-["Cuca nozes e doce de leite","bol",27.90,"kg"],
-["Cuca","bol",SEM,"un"],
-["Bolo chocolate","bol",SEM,"fatia"],
-["Bolo cenoura","bol",SEM,"un"],
-["Bolo amendoim","bol",SEM,"un"],
-["Bolo M&Ms","bol",SEM,"un"],
+  ["Leite Integral Tirol 1L","bev",5.99,"un"],
+  ["100% suco de laranja Longa Vita 290ml","bev",7.00,"un"],
+  ["100% suco de uva Campo Largo 250ml","bev",8.00,"un"],
+  ["100% suco de laranja Campo Largo 250ml","bev",7.00,"un"],
+  ["100% suco de uva Prats 300ml","bev",8.90,"un"],
+  ["Néctar de laranja 50% de suco Longa Vita 900ml","bev",SEM,"un"],
+  ["100% suco de laranja Prats 900ml","bev",15.00,"un"],
+  ["100% suco de uva Campo Largo 900ml","bev",18.00,"un"],
+  ["Néctar de goiaba 40% de suco Longa Vita 900ml","bev",11.99,"un"],
+  ["Suco sabor laranja Del Valle Kapo 200ml","bev",4.99,"un"],
+  ["Suco de laranja natural","bev",SEM,"un"],
+  ["Água de coco integral Campo Largo 900ml","bev",SEM,"un"],
+  ["DuCoco água de coco 200ml","bev",5.00,"un"],
+  ["Guaraná Pureza 1L","bev",8.00,"un"],
+  ["Guaraná Pureza 2L","bev",SEM,"un"],
+  ["Guaraná Antarctica Zero","bev",5.90,"un"],
+  ["Coca-Cola 2L","bev",SEM,"un"],
+  ["Coca-Cola 350ml","bev",7.00,"un"],
+  ["Coca-Cola Zero Açúcar 500ml","bev",8.50,"un"],
+  ["Coca-Cola Zero Açúcar 1L","bev",SEM,"un"],
+  ["Refrigerante de limão siciliano Fys Red Bull 250ml","bev",13.99,"un"],
+  ["Água mineral natural com gás Armazém 1,5L","bev",SEM,"un"],
+  ["Água mineral natural sem gás Armazém 1,5L","bev",SEM,"un"],
+  ["Água mineral natural com gás Santa Rita 1,5L","bev",3.99,"un"],
+  ["Energético Baly tradicional sem açúcar 473ml","bev",8.99,"un"],
+  ["Energético Baly tradicional 473ml","bev",8.99,"un"],
+  ["Energético Baly amora com hortelã 473ml","bev",8.99,"un"],
+  ["Energético Baly tradicional 2L","bev",SEM,"un"],
+  ["Energético Monster tradicional sem açúcar 473ml","bev",12.99,"un"],
+  ["Achocolatado Tirol Kids 200ml","bev",SEM,"un"],
+  ["Baly Kids uva 220ml","bev",7.00,"un"],
+  ["Baly Kids tutti frutti 220ml","bev",7.00,"un"],
+  ["Choco Leite 220ml","bev",SEM,"un"],
+  ["Choco Leite 200ml de vidro","bev",8.00,"un"],
+  ["Choco Leite 260ml","bev",7.00,"un"],
+  ["Nescau 180ml","bev",SEM,"un"],
+  ["Leite fermentado tradicional, morango ou uva 80g","bev",2.00,"un"],
+  ["Pro Force chocolate 15g de proteína Piracanjuba 250ml","bev",12.00,"un"],
+  ["Cerveja Budweiser Zero 330ml","bev",SEM,"un"],
+  ["Cerveja Sol 330ml","bev",7.00,"un"],
+  ["Cerveja Brahma 350ml","bev",4.50,"un"],
+  ["Cerveja Schin 350ml","bev",3.90,"un"],
+  ["Cerveja Heineken original 330ml","bev",9.99,"un"],
+  ["Cerveja Heineken sem glúten 330ml","bev",12.00,"un"],
+  ["Cerveja Amstel Large puro malte 250ml","bev",6.00,"un"],
 
 
-/* PÃES */
+  /* DOCES */
 
-["Pão caseiro","pao",19.90,"kg"],
-["Pão de nata","pao",22.90,"kg"],
-["Pão de milho","pao",21.90,"kg"],
-["Pão torrado","pao",44.90,"kg"],
-["Rosca de vento","pao",59.90,"kg"],
-["Pão redondo","pao",SEM,"un"],
-["Pão francês","pao",SEM,"un"],
-["Pão de cachorro quente","pao",SEM,"un"],
-["Pão integral","pao",SEM,"un"],
-["Doguinho","pao",39.90,"kg"],
-["Panetone","pao",34.90,"un"],
-["Panetone de chocolate","pao",34.90,"un"],
-["Panettone Pinheiro","pao",39.90,"kg"],
-["Panetone de pistache","pao",SEM,"un"],
-["Panetone de prestígio","pao",SEM,"un"],
-["Panetone de chocolate (kg)","pao",SEM,"kg"],
-["Sanduiche natural","pao",SEM,"kg"],
-["Sanduiche natural redondo","pao",SEM,"kg"],
-
-
-/* SALGADOS */
-
-["Pão de queijo de provolone","sal",56.90,"kg"],
-["Pão de queijo mini","sal",56.90,"kg"],
-["Pão de queijo","sal",SEM,"un"],
-["Pamonha salgada ou doce","sal",10.90,"un"],
-["Torta (salgada)","sal",SEM,"un"],
-["Dogão","sal",SEM,"un"],
-["Espetinho de frango","sal",SEM,"un"],
-["Pastel","sal",SEM,"un","Consultar sabores"],
-["Almôndega","sal",SEM,"un"],
-["Risole","sal",SEM,"un"],
-["Coxinha","sal",SEM,"un","Consultar sabores"],
-["Mini coxinha","sal",SEM,"un"],
-["Bolinha de queijo","sal",SEM,"un"],
-["Almofadinha","sal",SEM,"un"],
-["Torta salgada de calabresa","sal",12.00,"un"],
-["Torta salgada de brocolis","sal",12.00,"un"],
-["Torta salgada de frango","sal",12.00,"un"],
-["Pão de batata de bacon","sal",10.00,"un"],
-["Pão de batata de frango","sal",10.00,"un"],
-["Pão de batata de carne","sal",10.00,"un"],
-["Pão de batata de brocolis com ricota","sal",10.00,"un"],
-["Folhado de frango","sal",SEM,"un"],
+  ["Caixa de bombom Nestlé 220g","doc",18.90,"un"],
+  ["Bombom de nozes","doc",6.00,"un"],
+  ["Brigadeiro casadinho","doc",6.00,"un"],
+  ["Brigadeiro bicho de pé","doc",5.00,"un"],
+  ["Brigadeiro de chocolate","doc",5.00,"un"],
+  ["Brigadeiro de coco","doc",5.00,"un"],
+  ["Doce pé de moça","doc",3.90,"un"],
+  ["Mini sonho","doc",1.00,"un"],
+  ["Sonho","doc",5.00,"un"],
+  ["Quindim","doc",7.00,"un"],
+  ["Brownie com cobertura","doc",10.00,"un"],
+  ["Brownie americano","doc",SEM,"un"],
+  ["Cookie de red velvet","doc",SEM,"un"],
+  ["Cookie de chocolate","doc",SEM,"un"],
+  ["Cookie tradicional","doc",SEM,"un"],
+  ["Alfajor de doce de leite 55g","doc",7.50,"un"],
+  ["Folhado","doc",10.00,"un"],
+  ["Folhado de banana","doc",SEM,"un"],
+  ["Folhado com doce","doc",2.00,"un"],
+  ["Folhado de cereja","doc",SEM,"un"],
+  ["Mousse de chocolate","doc",6.90,"un"],
+  ["Pudim mini","doc",10.00,"un"],
+  ["Pão de mel","doc",46.90,"kg"],
+  ["Goiabinha","doc",49.90,"kg"],
+  ["Suspiro","doc",49.90,"kg"],
+  ["Chocolate Negresco","doc",2.00,"un"],
+  ["Chocolate Smash","doc",2.00,"un"],
+  ["Chocolate Prestígio","doc",2.00,"un"],
+  ["Chocolate Kit Kat","doc",2.00,"un"],
+  ["Chocolate Ouro Branco","doc",2.00,"un"],
+  ["Chiclete Trident","doc",3.50,"un","Consultar sabores"],
+  ["Pirulito Chupa-Chups laranja","doc",2.00,"un"],
+  ["Pirulito Chupa-Chups morango","doc",1.50,"un"],
+  ["Pirulito Fruslytto morango","doc",SEM,"un"],
+  ["Bala Valda 12g","doc",SEM,"un"],
+  ["Mentos","doc",SEM,"un"],
+  ["Barrinha de cereal","doc",SEM,"un"],
+  ["Carolina","doc",SEM,"un"],
+  ["Folhado de chocolate","doc",SEM,"un"],
+  ["Estrudel de maça","doc",SEM,"un"],
 
 
-/* LANCHES */
+  /* BOLOS E TORTAS */
 
-["Sanduíche natural","lan",12.00,"un"],
-["Wrap natural","lan",15.00,"un"],
-["Sanduíche natural (kg)","lan",59.90,"kg"],
-
-
-/* BISCOITOS */
-
-["Orelha de gato","bis",34.90,"kg"],
-["Rosquinha","bis",59.90,"kg"],
-["Bolacha pintada","bis",59.90,"kg"],
-["Chineque","bis",30.99,"kg"],
-["Bolacha de coco (34,90)","bis",34.90,"kg"],
-["Bolacha de fubá","bis",29.90,"kg"],
-["Bolacha caseira","bis",39.90,"kg"],
-["Biscoito amanteigado com goiabada","bis",39.90,"kg"],
-["Pet four de nozes","bis",69.90,"kg"],
-
-
-/* FRIOS */
-
-["Requeijão cremoso Porto Novo 400g","fri",16.99,"un"],
-["Requeijão cremoso Porto Novo 180g","fri",7.99,"un"],
-["Requeijão cremoso light Porto Novo 180g","fri",7.99,"un"],
-["Requeijão cremoso zero lactose Porto Novo 180g","fri",9.99,"un"],
-["Requeijão cremoso Tirol 180g","fri",9.79,"un"],
-["Requeijão cremoso light Tirol 180g","fri",9.79,"un"],
-["Manteiga de primeira qualidade sem sal Porto Novo 200g","fri",12.99,"un"],
-["Manteiga de primeira qualidade com sal Porto Novo 200g","fri",12.99,"un"],
-["Margarina com creme de leite Delícia","fri",9.89,"un"],
-["Nata Tirol 300g","fri",12.99,"un"],
-["Nata Porto Novo 280g","fri",SEM,"un"],
-["Queijo tipo quark Porto Novo 250g","fri",11.50,"un"],
-["Queijo tipo quark light Porto Novo 250g","fri",11.50,"un"],
-["Creme de ricota Porto Novo 150g","fri",7.99,"un"],
-["Queijo mussarela fatiado Tirol 150g","fri",12.99,"un"],
-["Queijo prato (lanche) fatiado Tirol 150g","fri",12.99,"un"],
-["Apresuntado fatiado 150g","fri",5.99,"un"],
-["Presunto cozido fatiado 120g","fri",6.99,"un"],
-["Mortadela Perdigão","fri",7.50,"un"],
-["Mortadela de ave (frango) fatiado Friolat 150g","fri",4.99,"un"],
-["Mortadela com toucinho Produtos da Fazenda 150g","fri",4.49,"un"],
-["Mortadela tradicional defumada Perdigão Ouro 200g","fri",9.99,"un"],
-["Salsicha Friolat 300g","fri",6.49,"un"],
-["Patê de frango com ervas finas Excelsior 100g","fri",4.75,"un"],
-["Patê de carne suína sabor presunto Excelsior 100g","fri",4.75,"un"],
+  ["Bolo de prestígio (fatia)","bol",15.00,"fatia"],
+  ["Bolo de frutas vermelhas (fatia)","bol",15.00,"fatia"],
+  ["Torta de morango com nata","bol",10.00,"fatia"],
+  ["Torta de coco","bol",15.00,"fatia"],
+  ["Torta de maracujá","bol",10.00,"fatia"],
+  ["Torta de banana","bol",SEM,"fatia"],
+  ["Torta de limão","bol",SEM,"fatia"],
+  ["Torta alemã (fatia)","bol",SEM,"fatia"],
+  ["Torta fria","bol",SEM,"un"],
+  ["Pudim (fatia)","bol",10.00,"fatia"],
+  ["Quindim em fatia","bol",SEM,"fatia"],
+  ["Rocambole de cereja","bol",10.00,"fatia"],
+  ["Rocambole de bolacha","bol",10.00,"fatia"],
+  ["Mini tortinha de uva","bol",10.00,"un"],
+  ["Mini tortinha de coco queimado","bol",8.00,"un"],
+  ["Mini tortinha de chocolate","bol",10.00,"un"],
+  ["Mini tortinha de limão","bol",10.00,"un"],
+  ["Mini tortinha de maracujá","bol",10.00,"un"],
+  ["Bolo misto","bol",4.99,"un"],
+  ["Bolo brigadeiro","bol",SEM,"un"],
+  ["Bolo floresta negra","bol",SEM,"un"],
+  ["Bolo de paçoca","bol",49.90,"kg"],
+  ["Bolo de banana","bol",29.90,"kg"],
+  ["Bolo mesclado","bol",29.90,"kg"],
+  ["Bolo de laranja","bol",29.90,"kg"],
+  ["Bolo de maçã","bol",29.90,"kg"],
+  ["Bolo de coco","bol",29.90,"kg"],
+  ["Bolo floresta negra","bol",29.90,"kg"],
+  ["Bolo formigueiro","bol",29.90,"kg"],
+  ["Bolo amanteigado","bol",29.90,"kg"],
+  ["Bolo de nozes","bol",24.90,"kg"],
+  ["Bolo de cenoura com calda de chocolate","bol",SEM,"kg"],
+  ["Cuca nozes e doce de leite","bol",27.90,"kg"],
+  ["Cuca","bol",SEM,"un"],
+  ["Bolo chocolate","bol",SEM,"fatia"],
+  ["Bolo cenoura","bol",SEM,"un"],
+  ["Bolo amendoim","bol",SEM,"un"],
+  ["Bolo M&Ms","bol",SEM,"un"],
 
 
-/* OUTROS */
+  /* PÃES */
 
-["Pringles original","out",12.99,"un"],
-["Farinha de rosca","out",15.97,"kg"]
+  ["Pão caseiro","pao",19.90,"kg"],
+  ["Pão de nata","pao",22.90,"kg"],
+  ["Pão de milho","pao",21.90,"kg"],
+  ["Pão torrado","pao",44.90,"kg"],
+  ["Rosca de vento","pao",59.90,"kg"],
+  ["Pão redondo","pao",SEM,"un"],
+  ["Pão francês","pao",SEM,"un"],
+  ["Pão de cachorro quente","pao",SEM,"un"],
+  ["Pão integral","pao",SEM,"un"],
+  ["Doguinho","pao",39.90,"kg"],
+  ["Panetone","pao",34.90,"un"],
+  ["Panetone de chocolate","pao",34.90,"un"],
+  ["Panettone Pinheiro","pao",39.90,"kg"],
+  ["Panetone de pistache","pao",SEM,"un"],
+  ["Panetone de prestígio","pao",SEM,"un"],
+  ["Panetone de chocolate (kg)","pao",SEM,"kg"],
+  ["Sanduiche natural","pao",SEM,"kg"],
+  ["Sanduiche natural redondo","pao",SEM,"kg"],
+
+
+  /* SALGADOS */
+
+  ["Pão de queijo de provolone","sal",56.90,"kg"],
+  ["Pão de queijo mini","sal",56.90,"kg"],
+  ["Pão de queijo","sal",SEM,"un"],
+  ["Pamonha salgada ou doce","sal",10.90,"un"],
+  ["Torta (salgada)","sal",SEM,"un"],
+  ["Dogão","sal",SEM,"un"],
+  ["Espetinho de frango","sal",SEM,"un"],
+  ["Pastel","sal",SEM,"un","Consultar sabores"],
+  ["Almôndega","sal",SEM,"un"],
+  ["Risole","sal",SEM,"un"],
+  ["Coxinha","sal",SEM,"un","Consultar sabores"],
+  ["Mini coxinha","sal",SEM,"un"],
+  ["Bolinha de queijo","sal",SEM,"un"],
+  ["Almofadinha","sal",SEM,"un"],
+  ["Torta salgada de calabresa","sal",12.00,"un"],
+  ["Torta salgada de brocolis","sal",12.00,"un"],
+  ["Torta salgada de frango","sal",12.00,"un"],
+  ["Pão de batata de bacon","sal",10.00,"un"],
+  ["Pão de batata de frango","sal",10.00,"un"],
+  ["Pão de batata de carne","sal",10.00,"un"],
+  ["Pão de batata de brocolis com ricota","sal",10.00,"un"],
+  ["Folhado de frango","sal",SEM,"un"],
+
+
+  /* LANCHES */
+
+  ["Sanduíche natural","lan",12.00,"un"],
+  ["Wrap natural","lan",15.00,"un"],
+  ["Sanduíche natural (kg)","lan",59.90,"kg"],
+
+
+  /* BISCOITOS */
+
+  ["Orelha de gato","bis",34.90,"kg"],
+  ["Rosquinha","bis",59.90,"kg"],
+  ["Bolacha pintada","bis",59.90,"kg"],
+  ["Chineque","bis",30.99,"kg"],
+  ["Bolacha de coco (34,90)","bis",34.90,"kg"],
+  ["Bolacha de fubá","bis",29.90,"kg"],
+  ["Bolacha caseira","bis",39.90,"kg"],
+  ["Biscoito amanteigado com goiabada","bis",39.90,"kg"],
+  ["Pet four de nozes","bis",69.90,"kg"],
+
+
+  /* FRIOS */
+
+  ["Requeijão cremoso Porto Novo 400g","fri",16.99,"un"],
+  ["Requeijão cremoso Porto Novo 180g","fri",7.99,"un"],
+  ["Requeijão cremoso light Porto Novo 180g","fri",7.99,"un"],
+  ["Requeijão cremoso zero lactose Porto Novo 180g","fri",9.99,"un"],
+  ["Requeijão cremoso Tirol 180g","fri",9.79,"un"],
+  ["Requeijão cremoso light Tirol 180g","fri",9.79,"un"],
+  ["Manteiga de primeira qualidade sem sal Porto Novo 200g","fri",12.99,"un"],
+  ["Manteiga de primeira qualidade com sal Porto Novo 200g","fri",12.99,"un"],
+  ["Margarina com creme de leite Delícia","fri",9.89,"un"],
+  ["Nata Tirol 300g","fri",12.99,"un"],
+  ["Nata Porto Novo 280g","fri",SEM,"un"],
+  ["Queijo tipo quark Porto Novo 250g","fri",11.50,"un"],
+  ["Queijo tipo quark light Porto Novo 250g","fri",11.50,"un"],
+  ["Creme de ricota Porto Novo 150g","fri",7.99,"un"],
+  ["Queijo mussarela fatiado Tirol 150g","fri",12.99,"un"],
+  ["Queijo prato (lanche) fatiado Tirol 150g","fri",12.99,"un"],
+  ["Apresuntado fatiado 150g","fri",5.99,"un"],
+  ["Presunto cozido fatiado 120g","fri",6.99,"un"],
+  ["Mortadela Perdigão","fri",7.50,"un"],
+  ["Mortadela de ave (frango) fatiado Friolat 150g","fri",4.99,"un"],
+  ["Mortadela com toucinho Produtos da Fazenda 150g","fri",4.49,"un"],
+  ["Mortadela tradicional defumada Perdigão Ouro 200g","fri",9.99,"un"],
+  ["Salsicha Friolat 300g","fri",6.49,"un"],
+  ["Patê de frango com ervas finas Excelsior 100g","fri",4.75,"un"],
+  ["Patê de carne suína sabor presunto Excelsior 100g","fri",4.75,"un"],
+
+
+  /* OUTROS */
+
+  ["Pringles original","out",12.99,"un"],
+  ["Farinha de rosca","out",15.97,"kg"]
 
 ];
 
 
-/* FUNÇÕES */
+/* =========================================================
+   FUNÇÕES GERAIS
+========================================================= */
 
 const $ = id => document.getElementById(id);
 
-const esc = s =>
-  String(s).replace(
-    /[&<>"]/g,
+const esc = s => {
+
+  return String(s).replace(
+    /[&<>"']/g,
     c => ({
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
-      '"':"&quot;"
+      '"':"&quot;",
+      "'":"&#039;"
     }[c])
   );
 
-const norm = s =>
-  String(s)
+};
+
+
+const norm = s => {
+
+  return String(s)
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g,"")
-    .toLowerCase();
+    .toLowerCase()
+    .trim();
+
+};
+
 
 let cat = "todos";
 let termo = "";
 
 
-/* PREÇO */
+/* =========================================================
+   PREÇO
+========================================================= */
 
 function precoHTML(p,u){
 
@@ -1057,7 +1480,8 @@ function precoHTML(p,u){
       ? p.toLocaleString(
           "pt-BR",
           {
-            minimumFractionDigits:2
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
           }
         )
       : p;
@@ -1069,110 +1493,181 @@ function precoHTML(p,u){
         ? "/fatia"
         : "";
 
-  return `R$ ${v}${
-    suf
-      ? `<small>${suf}</small>`
-      : ""
-  }`;
+  return `
+    R$ ${v}
+    ${
+      suf
+        ? `<small>${suf}</small>`
+        : ""
+    }
+  `;
+
 }
 
 
-/* DESCRIÇÕES */
+/* =========================================================
+   DESCRIÇÕES
+========================================================= */
 
 function descricao(nome){
 
   const n = norm(nome);
 
+
   if(n.includes("cafe ao leite"))
     return "Café preparado com leite.";
 
-  if(n === "espresso")
+
+  if(n === "cafe expresso")
     return "Café espresso preparado na máquina.";
+
 
   if(n.includes("cafe de maquina"))
     return "Café preparado na máquina.";
 
+
   if(n === "capuccino")
     return "Café cremoso com leite e chocolate.";
+
 
   if(n.includes("capuccino com canela"))
     return "Capuccino cremoso finalizado com canela.";
 
+
   if(n === "chocolate quente")
     return "Bebida quente e cremosa de chocolate.";
+
 
   if(n.includes("cafe bom jesus"))
     return "Café torrado e moído.";
 
+
   if(n.includes("cafe"))
     return "Café selecionado.";
+
 
   if(n.includes("leite"))
     return "Leite integral.";
 
+
   if(n.includes("suco"))
     return "Bebida de fruta pronta para beber.";
+
+
+  if(n.includes("agua de coco"))
+    return "Água de coco.";
+
 
   if(n.includes("energetico"))
     return "Energético.";
 
+
   if(n.includes("cerveja"))
     return "Cerveja.";
+
+
+  if(n.includes("refrigerante"))
+    return "Refrigerante.";
+
 
   if(n.includes("brigadeiro"))
     return "Doce artesanal.";
 
+
   if(n.includes("brownie"))
     return "Brownie de chocolate.";
+
 
   if(n.includes("cookie"))
     return "Cookie artesanal.";
 
+
   if(n.includes("bolo"))
     return "Bolo artesanal.";
+
 
   if(n.includes("torta"))
     return "Torta artesanal.";
 
+
   if(n.includes("pao"))
     return "Pão artesanal.";
+
 
   if(n.includes("coxinha"))
     return "Salgado artesanal.";
 
+
   if(n.includes("pastel"))
     return "Pastel recheado.";
 
+
   if(n.includes("sanduiche"))
-    return "Sanduíche preparado com carinho.";
+    return "Sanduíche preparado na hora.";
+
+
+  if(n.includes("wrap"))
+    return "Wrap preparado com ingredientes selecionados.";
+
 
   if(n.includes("requeijao"))
     return "Requeijão cremoso.";
 
+
+  if(n.includes("manteiga"))
+    return "Manteiga de qualidade.";
+
+
   if(n.includes("queijo"))
     return "Queijo.";
 
+
+  if(n.includes("mortadela"))
+    return "Frios selecionados.";
+
+
+  if(n.includes("presunto"))
+    return "Presunto fatiado.";
+
+
+  if(n.includes("salsicha"))
+    return "Salsicha.";
+
+
+  if(n.includes("pate"))
+    return "Patê.";
+
+
   return "";
+
 }
 
 
-/* TAMANHO */
+/* =========================================================
+   TAMANHO
+========================================================= */
 
 function tamanho(nome){
 
-  const m = [
-    ...nome.matchAll(
+  const matches = [
+    ...String(nome).matchAll(
       /(\d+(?:[.,]\d+)?)\s?(ml|l|g|kg)\b/gi
     )
-  ].pop();
+  ];
 
-  return m
-    ? m[1] + m[2].toLowerCase()
-    : "";
+  const m = matches.pop();
+
+  if(!m)
+    return "";
+
+  return `${m[1]}${m[2].toLowerCase()}`;
+
 }
 
 
-/* CARD */
+/* =========================================================
+   CARD
+========================================================= */
 
 function card(p){
 
@@ -1184,6 +1679,7 @@ function card(p){
     obs
   ] = p;
 
+
   const extras = [
     obs,
     tamanho(nome),
@@ -1193,26 +1689,38 @@ function card(p){
         ? "Fatia"
         : ""
   ]
-  .filter(Boolean)
-  .join(" • ");
+    .filter(Boolean)
+    .join(" • ");
+
 
   const f = FOTOS[nome];
 
+
   const foto = f
+
     ? `
       <img
         src="${esc(f)}"
         alt="${esc(nome)}"
         loading="lazy"
+        onerror="
+          this.style.display='none';
+          this.parentElement.classList.add('erro-img');
+          this.parentElement.textContent='Imagem não encontrada';
+        "
       >
     `
+
     : esc(
         nome.trim()[0].toUpperCase()
       );
 
+
   const d = descricao(nome);
 
+
   return `
+
     <article class="item">
 
       <div>
@@ -1229,8 +1737,10 @@ function card(p){
 
       </div>
 
+
       <div
         class="th${f ? " zoom" : ""}"
+
         ${
           f
             ? `
@@ -1238,12 +1748,17 @@ function card(p){
               tabindex="0"
               data-img="${esc(f)}"
               data-nome="${esc(nome)}"
+              aria-label="Ampliar foto de ${esc(nome)}"
             `
             : ""
         }
+
       >
+
         ${foto}
+
       </div>
+
 
       <div class="f">
 
@@ -1258,75 +1773,15 @@ function card(p){
       </div>
 
     </article>
+
   `;
+
 }
 
 
-/* RENDER */
-
-function render(){
-
-  const t = norm(termo.trim());
-
-  let html = "";
-
-  for(
-    const [k,titulo]
-    of Object.entries(CATEGORIAS)
-  ){
-
-    if(
-      cat !== "todos" &&
-      cat !== k
-    ){
-      continue;
-    }
-
-    const l =
-      produtos.filter(
-        p =>
-          p[1] === k &&
-          (
-            !t ||
-            norm(p[0]).includes(t)
-          )
-      );
-
-    if(!l.length)
-      continue;
-
-    html += `
-      <section id="c-${k}">
-
-        <h2>
-          ${titulo}
-
-          <small>
-            ${l.length}
-            ${l.length > 1 ? "itens" : "item"}
-          </small>
-        </h2>
-
-        <div class="list">
-          ${l.map(card).join("")}
-        </div>
-
-      </section>
-    `;
-  }
-
-  $("main").innerHTML =
-    html ||
-    `
-      <div class="vazio">
-        Nenhum item encontrado para
-        “${esc(termo)}”.
-      </div>
-    `;
-}
-
-
-/* TABS */
+/* =========================================================
+   TABS
+========================================================= */
 
 function tabs(){
 
@@ -1335,24 +1790,167 @@ function tabs(){
     ...CATEGORIAS
   };
 
+
   $("tabs").innerHTML =
+
     Object.entries(all)
+
       .map(
-        ([k,v]) =>
-          `
-            <button
-              data-k="${k}"
-              class="${k === cat ? "on" : ""}"
-            >
-              ${v}
-            </button>
-          `
+        ([k,v]) => `
+
+          <button
+            type="button"
+            data-k="${esc(k)}"
+            class="${k === cat ? "on" : ""}"
+            aria-pressed="${k === cat}"
+          >
+            ${esc(v)}
+          </button>
+
+        `
       )
+
       .join("");
+
 }
 
 
-/* CLIQUE NAS CATEGORIAS */
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+  const busca = norm(termo);
+
+
+  const filtrados = produtos.filter(p => {
+
+    const nome = p[0];
+    const categoria = p[1];
+
+    const pertenceCategoria =
+      cat === "todos" ||
+      categoria === cat;
+
+    const pertenceBusca =
+      !busca ||
+      norm(nome).includes(busca) ||
+      norm(descricao(nome)).includes(busca);
+
+    return pertenceCategoria && pertenceBusca;
+
+  });
+
+
+  if(!filtrados.length){
+
+    $("main").innerHTML = `
+
+      <div class="vazio">
+
+        <strong>Nenhum produto encontrado</strong>
+
+        <span>
+          Tente buscar por outro nome ou categoria.
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  if(busca){
+
+    $("main").innerHTML = `
+
+      <section>
+
+        <h2>
+          Resultados
+          <small>${filtrados.length} item(ns)</small>
+        </h2>
+
+        <div class="list">
+          ${filtrados.map(card).join("")}
+        </div>
+
+      </section>
+
+    `;
+
+    return;
+
+  }
+
+
+  const grupos = {};
+
+
+  filtrados.forEach(p => {
+
+    const categoria = p[1];
+
+    if(!grupos[categoria])
+      grupos[categoria] = [];
+
+    grupos[categoria].push(p);
+
+  });
+
+
+  const nomesCategorias = {
+    caf:"Cafés",
+    bev:"Bebidas",
+    doc:"Doces",
+    bol:"Bolos e Tortas",
+    pao:"Pães",
+    sal:"Salgados",
+    lan:"Lanches",
+    bis:"Biscoitos",
+    fri:"Frios e Laticínios",
+    out:"Outros"
+  };
+
+
+  $("main").innerHTML =
+
+    Object.entries(grupos)
+
+      .map(([codigo,itens]) => `
+
+        <section data-category="${esc(codigo)}">
+
+          <h2>
+
+            ${esc(nomesCategorias[codigo] || codigo)}
+
+            <small>
+              ${itens.length} item(ns)
+            </small>
+
+          </h2>
+
+          <div class="list">
+            ${itens.map(card).join("")}
+          </div>
+
+        </section>
+
+      `)
+
+      .join("");
+
+}
+
+
+/* =========================================================
+   CLIQUE NAS CATEGORIAS
+========================================================= */
 
 $("tabs").addEventListener(
   "click",
@@ -1364,28 +1962,49 @@ $("tabs").addEventListener(
     if(!b)
       return;
 
+
     cat = b.dataset.k;
+
 
     tabs();
     render();
+
 
     window.scrollTo({
       top:0,
       behavior:"smooth"
     });
 
-    b.scrollIntoView({
-      inline:"center",
-      block:"nearest",
-      behavior:"smooth"
+
+    requestAnimationFrame(() => {
+
+      const ativo =
+        $("tabs").querySelector(
+          `button[data-k="${CSS.escape(cat)}"]`
+        );
+
+      if(ativo){
+
+        ativo.scrollIntoView({
+          inline:"center",
+          block:"nearest",
+          behavior:"smooth"
+        });
+
+      }
+
     });
+
   }
 );
 
 
-/* ZOOM */
+/* =========================================================
+   ZOOM
+========================================================= */
 
 const lb = $("lb");
+
 
 function abrir(t){
 
@@ -1400,19 +2019,37 @@ function abrir(t){
 
   lb.classList.add("on");
 
+  lb.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
   document.body.style.overflow =
     "hidden";
+
 }
+
 
 function fechar(){
 
   lb.classList.remove("on");
 
+  lb.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
   $("lbi").src = "";
+  $("lbi").alt = "";
+  $("lbt").textContent = "";
 
   document.body.style.overflow =
     "";
+
 }
+
+
+/* Clique */
 
 $("main").addEventListener(
   "click",
@@ -1423,8 +2060,12 @@ $("main").addEventListener(
 
     if(t)
       abrir(t);
+
   }
 );
+
+
+/* Teclado */
 
 $("main").addEventListener(
   "keydown",
@@ -1442,38 +2083,70 @@ $("main").addEventListener(
     ){
 
       e.preventDefault();
+
       abrir(t);
+
     }
+
   }
 );
+
+
+/* Fechar clicando fora */
 
 lb.addEventListener(
   "click",
   e => {
 
-    if(e.target !== $("lbi"))
+    if(
+      e.target === lb ||
+      e.target === $("lbx")
+    ){
+
       fechar();
+
+    }
 
   }
 );
 
+
+/* Botão fechar */
+
 $("lbx").addEventListener(
   "click",
-  fechar
+  e => {
+
+    e.stopPropagation();
+
+    fechar();
+
+  }
 );
+
+
+/* ESC */
 
 document.addEventListener(
   "keydown",
   e => {
 
-    if(e.key === "Escape")
+    if(
+      e.key === "Escape" &&
+      lb.classList.contains("on")
+    ){
+
       fechar();
+
+    }
 
   }
 );
 
 
-/* BUSCA */
+/* =========================================================
+   BUSCA
+========================================================= */
 
 $("q").addEventListener(
   "input",
@@ -1488,30 +2161,57 @@ $("q").addEventListener(
 );
 
 
-/* LOGO */
+/* =========================================================
+   LOGO
+========================================================= */
 
-$("logo").innerHTML =
-  CONFIG.logo
-    ? `
-      <img
-        src="${esc(CONFIG.logo)}"
-        alt="${esc(CONFIG.nome)}"
+function carregarLogo(){
+
+  if(!CONFIG.logo){
+
+    $("logo").innerHTML = `
+
+      <strong
+        style="
+          font:700 22px Fraunces,Georgia,serif;
+          color:var(--acc);
+          text-align:center;
+        "
       >
-    `
-    : `
-      <strong style="
-        font:700 22px Fraunces,Georgia,serif;
-        color:var(--acc);
-        text-align:center;
-      ">
         BONAPPETTI
       </strong>
+
     `;
 
+    return;
 
-/* INICIALIZAÇÃO */
+  }
+
+
+  $("logo").innerHTML = `
+
+    <img
+      src="${esc(CONFIG.logo)}"
+      alt="${esc(CONFIG.nome)}"
+      onerror="
+        this.style.display='none';
+        this.parentElement.innerHTML='<strong style=\\'font:700 22px Fraunces,Georgia,serif;color:var(--acc)\\'>BONAPPETTI</strong>';
+      "
+    >
+
+  `;
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+carregarLogo();
 
 tabs();
+
 render();
 
 </script>
