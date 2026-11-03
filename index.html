@@ -11,6 +11,12 @@
 
 <style>
 
+.consultar-valor{
+  font:600 13px Inter,sans-serif;
+  color:var(--acc);
+  white-space:nowrap;
+}
+
 :root{
   --bg:#FBEBD2;
   --card:#F6E1C5;
@@ -2026,6 +2032,53 @@ carregarLogo();
 tabs();
 
 render();
+
+/* =========================================================
+   PREÇO
+========================================================= */
+
+function precoHTML(p,u){
+
+  // Produtos sem preço informado
+  if(
+    p === "--.--" ||
+    p === "--,--"
+  ){
+    return `
+      <span class="consultar-valor">
+        Consultar valor
+      </span>
+    `;
+  }
+
+  const v =
+    typeof p === "number"
+      ? p.toLocaleString(
+          "pt-BR",
+          {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+          }
+        )
+      : p;
+
+  const suf =
+    u === "kg"
+      ? "/kg"
+      : u === "fatia"
+        ? "/fatia"
+        : "";
+
+  return `
+    R$ ${v}
+    ${
+      suf
+        ? `<small>${suf}</small>`
+        : ""
+    }
+  `;
+
+}
 
 </script>
 
